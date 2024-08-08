@@ -1,0 +1,173 @@
+import React, { useEffect, useState } from 'react';
+import Loading from '../components/Loading';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../firebase/firebase.config';
+import toast from 'react-hot-toast';
+import { MdDelete, MdDownload } from 'react-icons/md';
+
+const SignCopy = () => {
+    const [user, loading, error] = useAuthState(auth);
+    const [myOrders, setMyOrders] = useState(null)
+    const [reFetch, setReFetch] = useState(false);
+
+    if (loading) {
+        return <Loading />
+    }
+
+    useEffect(() => {
+        fetch(`https://smart-seba-server.onrender.com/signCopy/user/${user?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status == "Success") {
+                    setReFetch(false)
+                    setMyOrders(data?.data)
+                    console.log(data);
+                }
+            })
+    }, [user, reFetch])
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const title = "সাইন কপি";
+        const selectedType = e.target.selectType.value;
+        const number = e.target.nidVoterForm.value;
+        const nameDob = e.target.NAMEDOB.value;
+
+        const info = {
+            selectedType,
+            number,
+            nameDob,
+            title,
+            email: user.email
+        }
+
+        console.log(info);
+        // post info to infobase
+
+        fetch("https://smart-seba-server.onrender.com/priceList/668f76383906559fe7ff631c")
+            .then(res => res.json())
+            .then(pData => {
+                const price = pData?.data?.signCopy;
+
+                if (price) {
+                    fetch(`https://smart-seba-server.onrender.com/users/${user.email}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data?.data?.amount >= price) {
+                    // post data to database
+                    fetch("https://smart-seba-server.onrender.com/signCopy/", {
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(info)
+                    })
+                        .then(res => res.json())
+                        .then(rData => {
+                            if (rData.status == "Success") {
+                                setReFetch(true)
+                                toast.success(rData.message);
+                                console.log(rData);
+                            } else {
+                                toast.error(rData.message);
+                                console.log(rData);
+                            }
+                        })
+                }else{
+                    toast.error("Please recharge to proceed this order");
+                }
+            })
+                }
+            })
+
+        
+    }
+    return (
+        <div className='w-full p-10 min-h-screen '>
+            <form onSubmit={handleSubmit} className='flex flex-col items-center'>
+                <h1 className='text-1xl md:text-3xl text-center'>সাইন কপি অর্ডার করুন।</h1>
+                <h1 className=' md:text-xl text-center mt-5 '>সাইন কপির জন্য 100 টাকা কাটা হবে।</h1>
+
+                <label className="form-control w-full ">
+                    <div className="label">
+                        <span className="label-text">Select Type:</span>
+                    </div>
+                    <select name='selectType' className="select select-bordered ">
+
+                        <option name="nid" defaultValue={true}>NID no</option>
+                        <option name="form">form no</option>
+                        <option name="birthCertificate">Birth Certificate no</option>
+                        <option name="voter">Voter no</option>
+                    </select>
+
+                </label>
+                <label className="form-control w-full ">
+                    <div className="label">
+                        <span className="label-text">আইডি/ভোটার/ফর্ম নাম্বার*</span>
+                    </div>
+                    <input type="text" placeholder="আইডি/ভোটার/ফর্ম নাম্বারঃ" name='nidVoterForm' className="input input-bordered w-full" />
+
+                </label>
+                <label className="form-control w-full ">
+                    <div className="label">
+                        <span className="label-text">NAME/DOB</span>
+                    </div>
+                    <input type="text" placeholder="NAME/DOB" name='NAMEDOB' className="input input-bordered w-full" />
+
+                </label>
+
+                <button className='btn w-full  mt-4 btn-primary text-white'>Submit</button>
+            </form>
+
+            <div className='mt-10'>
+                {
+                    myOrders && <div className="overflow-x-auto">
+                        <table className="table table-xs table-pin-rows table-pin-cols">
+                            <thead>
+                                <tr>
+                                    <td>SERVICE</td>
+                                    <td>STATUS</td>
+                                    <td>DATE</td>
+                                    <td>DOWNLOAD</td>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    myOrders?.map(data => <tr key={data._id}>
+
+                                        <td className='text-[15px]'>{data?.title}</td>
+                                        <td className='text-[15px]'>{data?.status}</td>
+                                        <td className='text-[15px]'>{data?.createdAt?.split("T")[0]}</td>
+                                        <td className='text-[15px] flex flex-row w-full'>
+                                            {
+                                                data?.status == "Processing" || "Pending" ? <button onClick={() => alert("You can't delete until successfully delivering this service")}>
+                                                    <MdDelete className='w-5 h-5 font-semibold text-blue-600' width={16} height={16} />
+                                                </button> : <button onClick={() => handleDeleteOrder(data?._id)}>
+                                                    <MdDelete className='w-5 h-5 font-semibold text-blue-600' width={16} height={16} />
+                                                </button>
+                                            }
+
+                                            {
+                                                data?.title == "boi" ? ""
+                                                    : <button>
+                                                        <MdDownload className='w-5 h-5 font-semibold text-blue-600 ml-5' width={16} height={16} />
+                                                    </button>
+                                            }
+                                        </td>
+                                    </tr>)
+                                }
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                }
+            </div>
+
+        </div>
+    );
+};
+
+export default SignCopy;
