@@ -3,6 +3,7 @@ import ServerCopyResult from "./ServerCopyResult";
 
 const ServerCopy = () => {
   const [nidData, setNidData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -11,12 +12,13 @@ const ServerCopy = () => {
 
     console.log("nid dob", nidNumber, dateOfBirth);
 
+    setLoading(true);
+
     try {
       const response = await fetch(
         `http://localhost:5000/api/nid?nid=${nidNumber}&dob=${dateOfBirth}`,
         {
           method: "GET",
-          //   mode:"no-cors",
           headers: {
             Accept: "application/json",
           },
@@ -28,6 +30,8 @@ const ServerCopy = () => {
       setNidData(data);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,8 +71,18 @@ const ServerCopy = () => {
           />
         </label>
 
-        <button className="btn w-full mt-4 btn-primary text-white">
-          Submit
+        <button
+          className="btn w-full mt-4 btn-primary text-white flex justify-center items-center"
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <span className="loading loading-spinner text-info"></span>
+              <span className="ml-2">Submitting...</span>
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
     </div>
