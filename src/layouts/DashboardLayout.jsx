@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Toaster } from "react-hot-toast";
 import {
-    FaAddressCard,
-    FaFingerprint,
-    FaMoneyCheckAlt,
-    FaPhoneAlt,
-    FaRegAddressCard,
-    FaSearchengin,
-    FaUserEdit,
-    FaWhatsapp
+  FaAddressCard,
+  FaFingerprint,
+  FaMoneyCheckAlt,
+  FaPhoneAlt,
+  FaRegAddressCard,
+  FaSearchengin,
+  FaUserEdit,
+  FaWhatsapp,
 } from "react-icons/fa";
 import { FaFilePen } from "react-icons/fa6";
 import { GiSyringe } from "react-icons/gi";
@@ -29,7 +29,7 @@ const DashboardLayout = () => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    fetch(`https://smart-seba-server.onrender.com/users/${user?.email}`)
+    fetch(`http://localhost:5000/users/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setUserData(data?.data);
