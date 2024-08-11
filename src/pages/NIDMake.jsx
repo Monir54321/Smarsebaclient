@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../firebase/firebase.config";
 import writeImage from "../assets/Mack.png";
+import toast from "react-hot-toast";
 
 const NIDMake = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [signature, setSignature] = useState(null);
   const [nidImage, setNidImage] = useState(null);
   const [signCopy, setSignCopy] = useState(null);
@@ -65,8 +66,6 @@ const NIDMake = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data?.data?.amount >= 5) {
-          // post data to database
-          // post data to database
           fetch("http://localhost:5000/nidMakes/", {
             method: "POST",
             headers: {
@@ -79,6 +78,7 @@ const NIDMake = () => {
             .then((data) => {
               if (data.status == "Success") {
                 toast.success(data.message);
+                e.target.reset();
                 console.log(data);
               } else {
                 toast.error(data.message);
@@ -91,11 +91,12 @@ const NIDMake = () => {
         }
       });
   };
+
   return (
-    <div className="w-full p-10 min-h-screen ">
+    <div className="w-full p-10 min-h-screen">
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <div className="border-gray-800 border-2 border-dotted rounded-md mb-3">
-          <label className="cursor-pointer ">
+          <label className="cursor-pointer">
             <img
               className="w-28 h-28 mx-auto"
               width={15}
@@ -104,7 +105,7 @@ const NIDMake = () => {
               alt=""
             />
             <input
-              className=" hidden"
+              className="hidden"
               accept="application/pdf"
               onChange={(e) =>
                 setSignCopy(URL.createObjectURL(e.target.files[0]))
@@ -121,15 +122,15 @@ const NIDMake = () => {
           </label>
         </div>
 
-        <div className="grid grid-cols-1 gap-4">
-          <label className="">
+        <div className="grid grid-cols-2 gap-4 w-full">
+          <label className="w-full">
             <div className="label">
               <span className="label-text text-xl">NID Image</span>
             </div>
-            <div className="flex  justify-center items-center gap-4">
+            <div className="w-full">
               <input
                 accept="image/*"
-                className="file-input file-input-bordered"
+                className="file-input file-input-bordered w-full"
                 onChange={(e) =>
                   setNidImage(URL.createObjectURL(e.target.files[0]))
                 }
@@ -137,24 +138,17 @@ const NIDMake = () => {
                 name="nidImage"
                 id="nidImage"
               />
-              <img
-                className="w-14 h-14"
-                width={15}
-                height={15}
-                src={nidImage}
-                alt=""
-              />
             </div>
           </label>
 
-          <label className="">
+          <label className="w-full">
             <div className="label">
               <span className="label-text text-xl">Signature</span>
             </div>
-            <div className="flex  justify-center items-center gap-4">
+            <div className="w-full">
               <input
                 accept="image/*"
-                className="file-input file-input-bordered"
+                className="file-input file-input-bordered w-full"
                 onChange={(e) =>
                   setSignature(URL.createObjectURL(e.target.files[0]))
                 }
@@ -162,19 +156,12 @@ const NIDMake = () => {
                 name="signature"
                 id="signature"
               />
-              <img
-                className="w-14 h-14"
-                width={15}
-                height={15}
-                src={signature}
-                alt=""
-              />
             </div>
           </label>
         </div>
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 w-full">
-          <label className="form-control w-full ">
+          <label className="form-control w-full">
             <div className="label">
               <span className="label-text">নামঃ (বাংলা)</span>
             </div>
@@ -185,7 +172,7 @@ const NIDMake = () => {
               className="input input-bordered w-full"
             />
           </label>
-          <label className="form-control w-full ">
+          <label className="form-control w-full">
             <div className="label">
               <span className="label-text">নামঃ (ইংরেজী)</span>
             </div>
@@ -199,7 +186,7 @@ const NIDMake = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 w-full">
-          <label className="form-control w-full ">
+          <label className="form-control w-full">
             <div className="label">
               <span className="label-text">আইডি নাম্বার</span>
             </div>
@@ -210,7 +197,7 @@ const NIDMake = () => {
               className="input input-bordered w-full"
             />
           </label>
-          <label className="form-control w-full ">
+          <label className="form-control w-full">
             <div className="label">
               <span className="label-text">পিন নাম্বার</span>
             </div>
@@ -224,7 +211,7 @@ const NIDMake = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 w-full">
-          <label className="form-control w-full ">
+          <label className="form-control w-full">
             <div className="label">
               <span className="label-text">পিতার নাম</span>
             </div>
@@ -236,7 +223,7 @@ const NIDMake = () => {
             />
           </label>
 
-          <label className="form-control w-full ">
+          <label className="form-control w-full">
             <div className="label">
               <span className="label-text">স্বামী অথবা স্ত্রী নাম</span>
             </div>
@@ -250,7 +237,7 @@ const NIDMake = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 w-full">
-          <label className="form-control w-full ">
+          <label className="form-control w-full">
             <div className="label">
               <span className="label-text">মাতার নাম</span>
             </div>
@@ -262,7 +249,7 @@ const NIDMake = () => {
             />
           </label>
 
-          <label className="form-control w-full ">
+          <label className="form-control w-full">
             <div className="label">
               <span className="label-text">জন্ম স্থান:</span>
             </div>
@@ -276,7 +263,7 @@ const NIDMake = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 w-full">
-          <label className="form-control w-full ">
+          <label className="form-control w-full">
             <div className="label">
               <span className="label-text">জন্ম তারিখ</span>
             </div>
@@ -287,7 +274,7 @@ const NIDMake = () => {
               className="input input-bordered w-full"
             />
           </label>
-          <label className="form-control w-full ">
+          <label className="form-control w-full">
             <div className="label">
               <span className="label-text">প্রধানের তারিখঃ</span>
             </div>
@@ -300,7 +287,7 @@ const NIDMake = () => {
             />
           </label>
         </div>
-        <label className="form-control w-full ">
+        <label className="form-control w-full">
           <div className="label">
             <span className="label-text">রক্তের গ্রপ</span>
           </div>
@@ -312,7 +299,7 @@ const NIDMake = () => {
           />
         </label>
 
-        <label className="form-control w-full  mt-3">
+        <label className="form-control w-full mt-3">
           <div className="label">
             <span className="label-text">ঠিকানাঃ</span>
           </div>
@@ -331,7 +318,7 @@ const NIDMake = () => {
           </div>
         </label>
 
-        <button className="btn w-full  mt-4 btn-primary text-white">
+        <button className="btn w-full mt-4 btn-primary text-white">
           Submit
         </button>
       </form>

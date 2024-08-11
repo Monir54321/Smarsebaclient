@@ -11,7 +11,7 @@ import {
   FaUserEdit,
   FaWhatsapp,
 } from "react-icons/fa";
-import { FaFilePen } from "react-icons/fa6";
+import { FaFilePen, FaMapLocation } from "react-icons/fa6";
 import { GiSyringe } from "react-icons/gi";
 import { IoMdCard } from "react-icons/io";
 import { MdLockReset } from "react-icons/md";
@@ -117,6 +117,12 @@ const DashboardLayout = () => {
               <Link to={"/dashboard/biometric"}>
                 <FaFingerprint width={16} height={16} />
                 বায়োমেট্রিক
+              </Link>
+            </li>
+            <li className="mt-2 text-[15px] font-sans text-gray-500">
+              <Link to={"/dashboard/locationTrack"}>
+                <FaMapLocation width={16} height={16} />
+                লোকেশন ট্র্যাক
               </Link>
             </li>
             <li className="mt-2 text-[15px] font-sans text-gray-500">
