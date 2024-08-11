@@ -16,7 +16,7 @@ const PrivateAdminRoute = ({ children }) => {
   }
 
   useEffect(() => {
-    fetch(`https://smart-seba-server.onrender.com/users/${user.email}`)
+    fetch(`http://localhost:5000/users/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setUserData(data?.data);
@@ -32,7 +32,6 @@ const PrivateAdminRoute = ({ children }) => {
     return (
       <Navigate to="/" state={{ from: location }} replace={true}></Navigate>
     );
-    
   }
 };
 
