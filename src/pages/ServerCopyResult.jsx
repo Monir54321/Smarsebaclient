@@ -5,6 +5,7 @@ import QRCode from "qrcode";
 
 const ServerCopyResult = ({ nidData: data }) => {
   let qrName = data?.data?.data.nameEn;
+
   let qrDob = data?.data?.data?.dateOfBirth;
   const [qrImage, setQrImage] = useState(null);
 
@@ -24,37 +25,37 @@ const ServerCopyResult = ({ nidData: data }) => {
 
   let presentAddress = data?.data?.data?.permanentAddress;
 
-  let ad = presentAddress.split(",");
+  let ad = presentAddress ? presentAddress.split(",") : [];
 
-  let division = ad[0];
-  let district = ad[1];
-  let rmo = ad[2];
-  let upazila = ad[3];
-  let union = ad[4];
-  let postname = ad[5];
-  let postcode = ad[6];
-  let ward = ad[7];
-  let village = ad[8];
-  let area = ad[9];
-  let home = ad[10];
-  let birthplace = ad[11];
+  let division = ad[0] || "";
+  let district = ad[1] || "";
+  let rmo = ad[2] || "";
+  let upazila = ad[3] || "";
+  let union = ad[4] || "";
+  let postname = ad[5] || "";
+  let postcode = ad[6] || "";
+  let ward = ad[7] || "";
+  let village = ad[8] || "";
+  let area = ad[9] || "";
+  let home = ad[10] || "";
+  let birthplace = ad[11] || "";
 
   let permanentAddress = data?.data?.data?.permanentAddress;
 
-  let pad = permanentAddress.split(",");
+  let pad = permanentAddress ? permanentAddress.split(",") : [];
 
-  let pdivision = pad[0];
-  let pdistrict = pad[1];
-  let prmo = pad[2];
-  let pupazila = pad[3];
-  let punion = pad[4];
-  let ppostname = pad[5];
-  let ppostcode = pad[6];
-  let pward = pad[7];
-  let pvillage = pad[8];
-  let parea = pad[9];
-  let phome = pad[10];
-  let pbirthplace = pad[11];
+  let pdivision = pad[0] || "";
+  let pdistrict = pad[1] || "";
+  let prmo = pad[2] || "";
+  let pupazila = pad[3] || "";
+  let punion = pad[4] || "";
+  let ppostname = pad[5] || "";
+  let ppostcode = pad[6] || "";
+  let pward = pad[7] || "";
+  let pvillage = pad[8] || "";
+  let parea = pad[9] || "";
+  let phome = pad[10] || "";
+  let pbirthplace = pad[11] || "";
 
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
@@ -62,14 +63,14 @@ const ServerCopyResult = ({ nidData: data }) => {
   });
 
   return (
-    <div className="mt-10">
+    <div>
       <div ref={componentRef} className=" relative w-[1070px]">
         <div className="background">
           <img
             className="crane"
             src={serverCopyImage}
             height="1500px"
-            width="1070px"
+            width="1270px"
             alt="Background"
           />
           <div
@@ -174,6 +175,7 @@ const ServerCopyResult = ({ nidData: data }) => {
               left: "37%",
               top: "27.4%",
               width: "auto",
+
               fontSize: "18px",
               color: "rgb(7, 7, 7)",
             }}
@@ -303,7 +305,7 @@ const ServerCopyResult = ({ nidData: data }) => {
               color: "rgb(7, 7, 7)",
             }}
           >
-            {data?.data?.data?.birthPlace}
+            {data?.data?.data?.presentAddr.division}
           </div>
           <div
             style={{
@@ -603,7 +605,7 @@ const ServerCopyResult = ({ nidData: data }) => {
               color: "rgb(7, 7, 7)",
             }}
           >
-            {`বাসা/হোল্ডিং: ${home}, গ্রাম/রাস্তা: ${village}, মৌজা/মহল্লা: ${area}, পোস্ট অফিস: ${postname}, পোষ্ট কোড: ${postcode}, ইউনিয়ন: ${union}, উপজেলা: ${upazila}, জেলা: ${district}, বিভাগ: ${division}`}
+            {`বাসা/হোল্ডিং: ${home}, গ্রাম/রাস্তা: ${village}, মৌজা/মহল্লা: ${area}, ইউনিয়ন: ${union}, ${presentAddress}`}
           </div>
           <div
             style={{
@@ -628,7 +630,7 @@ const ServerCopyResult = ({ nidData: data }) => {
               color: "rgb(7, 7, 7)",
             }}
           >
-            {`বাসা/হোল্ডিং: ${phome}, গ্রাম/রাস্তা: ${pvillage}, মৌজা/মহল্লা: ${parea}, পোস্ট অফিস: ${ppostname}, পোষ্ট কোড: ${ppostcode}, ইউনিয়ন: ${punion}, উপজেলা: ${pupazila}, জেলা: ${pdistrict}, বিভাগ: ${pdivision}`}
+            {`বাসা/হোল্ডিং: ${phome}, গ্রাম/রাস্তা: ${pvillage}, মৌজা/মহল্লা: ${parea}, ইউনিয়ন: ${punion}, ${presentAddress}`}
           </div>
           <div
             style={{
@@ -669,8 +671,9 @@ const ServerCopyResult = ({ nidData: data }) => {
             <img
               id="photo"
               src={data?.data?.data?.photo}
+              className="mt-3"
               height="140px"
-              width="125px"
+              width="160px"
               style={{ borderRadius: "10px" }}
               alt="Profile"
             />
@@ -693,7 +696,7 @@ const ServerCopyResult = ({ nidData: data }) => {
       <div className="w-full flex justify-center">
         <button
           onClick={handlePrint}
-          className="btn w-fit text-center btn-primary text-white"
+          className="btn w-full   mb-4 btn-primary text-white flex justify-center items-center"
         >
           Download
         </button>
