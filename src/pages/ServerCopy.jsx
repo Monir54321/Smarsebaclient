@@ -44,7 +44,7 @@ const ServerCopy = () => {
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <h1 className="text-1xl md:text-3xl text-center">Server Copy</h1>
         <h1 className="md:text-xl text-center mt-5">
-          আপনার একাউন্ট থেকে 10 টাকা কাটা হবে।
+          আপনার একাউন্ট থেকে 5 টাকা কাটা হবে।
         </h1>
 
         <label className="form-control w-full">
