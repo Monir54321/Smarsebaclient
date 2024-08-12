@@ -122,10 +122,10 @@ const NIDMake = () => {
           </label>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 w-full">
+        <div className="grid grid-cols-1  w-full">
           <label className="w-full">
             <div className="label">
-              <span className="label-text text-xl">NID Image</span>
+              <span className="label-text">NID Image</span>
             </div>
             <div className="w-full">
               <input
@@ -143,7 +143,7 @@ const NIDMake = () => {
 
           <label className="w-full">
             <div className="label">
-              <span className="label-text text-xl">Signature</span>
+              <span className="label-text ">Signature</span>
             </div>
             <div className="w-full">
               <input
