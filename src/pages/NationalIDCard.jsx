@@ -180,7 +180,7 @@ const NationalIDCard = () => {
                                         style={{ fontSize: '16.6px', paddingLeft: '3px', WebkitTextStroke: '0.4px black' }}
                                         id="nameBn"
                                         >
-                                        Nishk
+                                        মো শফিকুল ইসলাম ভাইসাব
                                         </span>
                                     </p>
                                     </div>
@@ -227,7 +227,7 @@ const NationalIDCard = () => {
                                     <p style={{ marginTop: '-2px' }}>
                                         <span>ID NO: </span>
                                         <span className="text-[#ff0000] font-bold" id="card_nid_no">
-                                        12222222
+                                        691129772612121
                                         </span>
                                     </p>
                                     </div>

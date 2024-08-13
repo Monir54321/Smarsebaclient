@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { FaBars } from "react-icons/fa";
-import auth from "../firebase/firebase.config";
 import { signOut } from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Loading from "./Loading";
+import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import auth from "../firebase/firebase.config";
+import Loading from "./Loading";
 
 const Navbar = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -24,14 +24,14 @@ const Navbar = () => {
   }
 
   return (
-    <div className="flex justify-between items-center  w-[100%] bg-gray-100  px-5 py-1 shadow-md">
-      <div>
+    <div className="flex justify-between items-center  w-[100%] bg-gray-100  px-5 py-1 shadow-md print:hidden">
+      <div className="print:hidden">
         <label htmlFor="my-drawer-2" className=" cursor-pointer lg:hidden">
           <FaBars className="w-10 h-10 text-blue-700" width={16} height={16} />
         </label>
       </div>
 
-      <div className="dropdown dropdown-left">
+      <div className="dropdown dropdown-left print:hidden">
         <div className="flex items-center gap-4">
           <p className="text-xl font-bold p-3 text-white bg-blue-500 rounded-lg ">
             {userData?.amount}

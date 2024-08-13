@@ -45,11 +45,12 @@ const DashboardLayout = () => {
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col">
-          <Navbar />
-
+          <div className="print:hidden">
+            <Navbar />
+          </div>
           <Outlet />
         </div>
-        <div className="drawer-side z-30 ">
+        <div className="drawer-side z-30">
           <label
             htmlFor="my-drawer-2"
             aria-label="close sidebar"
