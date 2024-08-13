@@ -45,7 +45,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-
+       
         <ul
           tabIndex={0}
           className="dropdown-content menu text-white rounded-[10px]  w-40 p-2 bg-gray-800 fixed left-[6px] mt-[70px]  shadow z-10"

@@ -31,6 +31,7 @@ import ManageUsers from "./pages/ManageUsers.jsx";
 import PrivateAdminRoute from "./layouts/PrivateAdminRoute.jsx";
 import ViewOrder from "./pages/ViewOrder.jsx";
 import LocationTrack from "./pages/LocationTrack.jsx";
+import NationalIDCard from "./pages/NationalIDCard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,9 @@ const router = createBrowserRouter([
       {
         path: "/servercopyresult",
         element: <ServerCopyResult />,
+      }, {
+        path: "/national-id-card",
+        element: <NationalIDCard />,
       },
       {
         path: "/signup",
