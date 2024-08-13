@@ -4,6 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../firebase/firebase.config";
 import writeImage from "../assets/Mack.png";
 import toast from "react-hot-toast";
+import NationalIDCard from "./NationalIDCard";
 
 const NIDMake = () => {
   const [user, loading] = useAuthState(auth);
@@ -90,6 +91,9 @@ const NIDMake = () => {
           console.log(data);
         }
       });
+
+
+      
   };
 
   return (
@@ -322,6 +326,7 @@ const NIDMake = () => {
           Submit
         </button>
       </form>
+      <button onClick={() => <NationalIDCard  /> }>NationalIDCard</button>
     </div>
   );
 };
