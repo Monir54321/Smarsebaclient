@@ -36,7 +36,7 @@ const ServerCopy = () => {
   };
 
   if (nidData) {
-    return <ServerCopyResult nidData={nidData} />;
+    return <ServerCopyResult nidData={nidData} />; //nidData={nidData}
   }
 
   return (
