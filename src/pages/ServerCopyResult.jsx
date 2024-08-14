@@ -10,9 +10,9 @@
 
 import "./ServerCopyResult.css";
 
-const ServerCopyResult = ({ nidData }) => {
-  const { name } = nidData;
-  console.log("🚀 ~ ServerCopyResult ~ name:", nidData);
+const ServerCopyResult = ({ nidData, nidAddressData }) => {
+  const nidInformation = nidData?.data?.data;
+  const AddressData = nidAddressData?.data;
 
   /*  console.log("🚀 ~ ServerCopyResult ~ nidData:", nidData)
   let qrName = data?.data?.data.nameEn;
@@ -614,8 +614,6 @@ const ServerCopyResult = ({ nidData }) => {
           rangpur
         </div>
 
-       
-
         <div
           style={{
             position: "absolute",
@@ -678,7 +676,7 @@ const ServerCopyResult = ({ nidData }) => {
           <img
             // id="qr"
             src={`/public/barcode.gif`}
-            style={{height:"110px",width:"120px",marginLeft:"-10px"}}
+            style={{ height: "110px", width: "120px", marginLeft: "-10px" }}
             // height="110px"
             // width="110px"
             alt="QR Code"
@@ -697,7 +695,7 @@ const ServerCopyResult = ({ nidData }) => {
             fontSize: "13px",
             color: "rgb(7, 7, 7)",
             margin: 0,
-            padding:0,
+            padding: 0,
             alignItems: "center",
             textAlign: "center",
           }}

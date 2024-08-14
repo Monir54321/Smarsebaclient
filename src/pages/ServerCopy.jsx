@@ -3,6 +3,7 @@ import ServerCopyResult from "./ServerCopyResult";
 
 const ServerCopy = () => {
   const [nidData, setNidData] = useState(null);
+  const [nidAddressData, setNidAddressData] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -26,8 +27,20 @@ const ServerCopy = () => {
       );
 
       const data = await response.json();
-      console.log("nid data", data);
+
+      const result = await fetch(
+        `http://localhost:5000/api/nid2?nid=${nidNumber}&dob=${dateOfBirth}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+      const nidAddressData = await result.json();
+
       setNidData(data);
+      setNidAddressData(nidAddressData);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -35,8 +48,10 @@ const ServerCopy = () => {
     }
   };
 
-  if (nidData) {
-    return <ServerCopyResult nidData={nidData} />; //nidData={nidData}
+  if (nidAddressData) {
+    return (
+      <ServerCopyResult nidData={nidData} nidAddressData={nidAddressData} />
+    ); //nidData={nidData}
   }
 
   return (
