@@ -91,22 +91,19 @@ const NIDMake = () => {
           console.log(data);
         }
       });
-
-
-      
   };
 
   return (
     <div className="w-full p-10 min-h-screen">
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
-        <div className="border-gray-800 border-2 border-dotted rounded-md mb-3">
-          <label className="cursor-pointer">
+        <div className="border-gray-800 border-2 border-dotted rounded-md mb-3  md:w-[300px]  ">
+          <label className="cursor-pointer ">
             <img
-              className="w-28 h-28 mx-auto"
+              className="w-20 h-20 md:w-28 md:h-28 mx-auto"
               width={15}
               height={15}
               src={writeImage}
-              alt=""
+              alt="Sign Copy"
             />
             <input
               className="hidden"
@@ -118,8 +115,8 @@ const NIDMake = () => {
               name="nidImage"
               id="nidImage"
             ></input>
-            <div className="label p-5">
-              <span className="label-text text-xl text-center block w-full">
+            <div className="label ">
+              <span className="label-text text-sm text-center block w-full pb-2 px-1">
                 সাইন কপি আপলোড করুন
               </span>
             </div>
@@ -326,7 +323,7 @@ const NIDMake = () => {
           Submit
         </button>
       </form>
-      <button onClick={() => <NationalIDCard  /> }>NationalIDCard</button>
+      <button onClick={() => <NationalIDCard />}>NationalIDCard</button>
     </div>
   );
 };
