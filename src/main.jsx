@@ -1,37 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
-import MainLayout from "./layouts/MainLayout.jsx";
-import LogIn from "./pages/Login.jsx";
-import SignUp from "./pages/SignUp.jsx";
-import DashboardLayout from "./layouts/DashboardLayout.jsx";
-import Biometric from "./pages/Biometric.jsx";
-import Recharge from "./pages/Recharge.jsx";
-import BikashPinReset from "./pages/BikashPinReset.jsx";
-import NogodInfo from "./pages/NogodInfo.jsx";
-import BikashInfo from "./pages/BikashInfo.jsx";
-import NameAddressLostId from "./pages/NameAddressLostId.jsx";
-import BirthCertificateFix from "./pages/BirthCertificateFix.jsx";
-import CallListAllSim from "./pages/CallListAllSim.jsx";
-import SignCopy from "./pages/SignCopy.jsx";
-import SaftyTika from "./pages/SaftyTika.jsx";
-import BirthCertificateOnline from "./pages/BirthCertificateOnline.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
+import "./index.css";
+import DashboardLayout from "./layouts/DashboardLayout.jsx";
+import MainLayout from "./layouts/MainLayout.jsx";
+import PrivateAdminRoute from "./layouts/PrivateAdminRoute.jsx";
 import PrivateRoute from "./layouts/PrivateRoute.jsx";
+import BikashInfo from "./pages/BikashInfo.jsx";
+import BikashPinReset from "./pages/BikashPinReset.jsx";
+import Biometric from "./pages/Biometric.jsx";
+import BirthCertificateFix from "./pages/BirthCertificateFix.jsx";
+import BirthCertificateOnline from "./pages/BirthCertificateOnline.jsx";
+import CallListAllSim from "./pages/CallListAllSim.jsx";
+import FileList from "./pages/FileList.jsx";
+import LocationTrack from "./pages/LocationTrack.jsx";
+import LogIn from "./pages/Login.jsx";
+import ManageUsers from "./pages/ManageUsers.jsx";
+import NameAddressLostId from "./pages/NameAddressLostId.jsx";
 import NIDMake from "./pages/NIDMake.jsx";
 import NIDOrder from "./pages/NIDOrder.jsx";
-import ServerCopyToNID from "./pages/ServerCopyToNID.jsx";
-import ServerCopy from "./pages/ServerCopy.jsx";
-import FileList from "./pages/FileList.jsx";
+import NogodInfo from "./pages/NogodInfo.jsx";
 import Orders from "./pages/Orders.jsx";
 import PriceList from "./pages/PriceList.jsx";
+import Recharge from "./pages/Recharge.jsx";
+import SaftyTika from "./pages/SaftyTika.jsx";
+import ServerCopy from "./pages/ServerCopy.jsx";
 import ServerCopyResult from "./pages/ServerCopyResult.jsx";
-import ManageUsers from "./pages/ManageUsers.jsx";
-import PrivateAdminRoute from "./layouts/PrivateAdminRoute.jsx";
-import ViewOrder from "./pages/ViewOrder.jsx";
-import LocationTrack from "./pages/LocationTrack.jsx";
-import NationalIDCard from "./pages/NationalIDCard.jsx";
+import ServerCopyToNID from "./pages/ServerCopyToNID.jsx";
+import SignCopy from "./pages/SignCopy.jsx";
+import SignUp from "./pages/SignUp.jsx";
 
 const router = createBrowserRouter([
   {
@@ -46,9 +44,6 @@ const router = createBrowserRouter([
       {
         path: "/servercopyresult",
         element: <ServerCopyResult />,
-      }, {
-        path: "/national-id-card",
-        element: <NationalIDCard />,
       },
       {
         path: "/signup",
