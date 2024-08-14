@@ -1,21 +1,34 @@
 import { useEffect, useState } from "react";
-import Loading from "../components/Loading";
 import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../firebase/firebase.config";
-import writeImage from "../assets/Mack.png";
 import toast from "react-hot-toast";
+import writeImage from "../assets/Mack.png";
+import Loading from "../components/Loading";
+import auth from "../firebase/firebase.config";
+import getBanglaDate from "../utils/bangladate";
+import { uploadFile } from "../utils/uploadFileFromFrontend";
 import NationalIDCard from "./NationalIDCard";
 
 const NIDMake = () => {
   const [user, loading] = useAuthState(auth);
+  const [imageLoading, setImageLoading] = useState(false);
   const [signature, setSignature] = useState(null);
   const [nidImage, setNidImage] = useState(null);
   const [signCopy, setSignCopy] = useState(null);
   const [myOrders, setMyOrders] = useState(null);
+  const [info, setInfo] = useState(null);
+  const [imageUrls, setImageUrls] = useState({
+    nidImg: "",
+    signatureImg: "",
+  });
 
-  if (loading) {
-    return <Loading />;
-  }
+  console.log("imageUrls", imageUrls);
+
+  const today = getBanglaDate();
+
+  useEffect(() => {
+    window.onload =
+      "https://barcode.tec-it.com/barcode.ashx?data=Your+nid+data&code=PDF417&download=true ";
+  }, []);
 
   useEffect(() => {
     fetch(`http://localhost:5000/nidMakes/user/${user?.email}`)
@@ -26,6 +39,22 @@ const NIDMake = () => {
       });
   }, [user]);
 
+  const handleFileChange = async (event, fieldName) => {
+    setImageLoading(true);
+    const { files } = event.target;
+    if (files?.length) {
+      const file = files[0];
+      const uploadFileResponse = await uploadFile(file, fieldName);
+      if (uploadFileResponse?.success) {
+        setImageLoading(false);
+        setImageUrls((prevState) => ({
+          ...prevState,
+          [uploadFileResponse.fieldName]: uploadFileResponse.imageUrl,
+        }));
+      }
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const title = "এনআইডি কার্ড";
@@ -34,7 +63,7 @@ const NIDMake = () => {
     const idNumber = e.target.idNumber.value;
     const pinNumber = e.target.pinNumber.value;
     const fatherNameBangla = e.target.fatherNameBangla.value;
-    const husbandWifeName = e.target.husbandWifeName.value;
+    // const husbandWifeName = e.target.husbandWifeName.value;
     const motherName = e.target.motherName.value;
     const birthLocation = e.target.birthLocation.value;
     const dateOfBirth = e.target.dateOfBirth.value;
@@ -44,14 +73,14 @@ const NIDMake = () => {
 
     const info = {
       title,
-      signature,
-      nidImage,
+      signature: imageUrls.signatureImg,
+      nidImage: imageUrls.nidImg,
       nameBangla,
       nameEnglish,
       idNumber,
       pinNumber,
       fatherNameBangla,
-      husbandWifeName,
+      // husbandWifeName,
       motherName,
       birthLocation,
       dateOfBirth,
@@ -60,8 +89,6 @@ const NIDMake = () => {
       location,
       email: user.email,
     };
-
-    console.log(info);
 
     fetch(`http://localhost:5000/users/${user.email}`)
       .then((res) => res.json())
@@ -86,6 +113,7 @@ const NIDMake = () => {
                 console.log(data);
               }
             });
+          setInfo(info);
         } else {
           toast.error(data.message);
           console.log(data);
@@ -93,8 +121,21 @@ const NIDMake = () => {
       });
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (info) {
+    return <NationalIDCard info={info} />;
+  }
+
   return (
     <div className="w-full p-10 min-h-screen">
+      <div>
+        <a href="https://barcode.tec-it.com/barcode.ashx?data=Your+nid+data&code=PDF417&download=true ">
+          barcode
+        </a>
+      </div>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <div className="border-gray-800 border-2 border-dotted rounded-md mb-3  md:w-[300px]  ">
           <label className="cursor-pointer ">
@@ -132,9 +173,10 @@ const NIDMake = () => {
               <input
                 accept="image/*"
                 className="file-input file-input-bordered w-full"
-                onChange={(e) =>
-                  setNidImage(URL.createObjectURL(e.target.files[0]))
-                }
+                // onChange={(e) =>
+                //   setNidImage(URL.createObjectURL(e.target.files[0]))
+                // }
+                onChange={(e) => handleFileChange(e, "nidImg")}
                 type="file"
                 name="nidImage"
                 id="nidImage"
@@ -150,9 +192,11 @@ const NIDMake = () => {
               <input
                 accept="image/*"
                 className="file-input file-input-bordered w-full"
-                onChange={(e) =>
-                  setSignature(URL.createObjectURL(e.target.files[0]))
-                }
+                // onChange={(e) =>
+                //   setSignature(URL.createObjectURL(e.target.files[0]))
+                // }
+
+                onChange={(e) => handleFileChange(e, "signatureImg")}
                 type="file"
                 name="signature"
                 id="signature"
@@ -224,7 +268,7 @@ const NIDMake = () => {
             />
           </label>
 
-          <label className="form-control w-full">
+          {/* <label className="form-control w-full">
             <div className="label">
               <span className="label-text">স্বামী অথবা স্ত্রী নাম</span>
             </div>
@@ -234,7 +278,7 @@ const NIDMake = () => {
               name="husbandWifeName"
               className="input input-bordered w-full"
             />
-          </label>
+          </label> */}
         </div>
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 w-full">
@@ -282,7 +326,8 @@ const NIDMake = () => {
             <input
               type="text"
               placeholder=""
-              defaultValue={new Date()}
+              readOnly
+              defaultValue={today}
               name="applyDate"
               className="input input-bordered w-full"
             />
@@ -323,7 +368,6 @@ const NIDMake = () => {
           Submit
         </button>
       </form>
-      <button onClick={() => <NationalIDCard />}>NationalIDCard</button>
     </div>
   );
 };
