@@ -56,10 +56,10 @@ const DashboardLayout = () => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu bg-[#F8FAFC] text-black shadow-md  border-r-4 min-h-full w-[280px]">
+          <ul className="menu bg-[#F8FAFC] text-black shadow-md  border-r-4 min-h-full w-[260px] md:w-[280px]">
             {/* Sidebar content here */}
             <Link className="" to={"/dashboard"}>
-              <img className="h-[150px]" src={logo} alt="" />
+              <img className="h-[80px] md:h-[130px]" src={logo} alt="" />
             </Link>
             {userData?.role == "master" && (
               <li className="mt-2 text-[15px] font-sans text-gray-500">
@@ -108,7 +108,7 @@ const DashboardLayout = () => {
                 এনআইডি কার্ড
               </Link>
             </li>
-            <li className="mt-2 text-[15px] font-sans text-gray-500">
+            <li className="mt-2 w-full text-[15px] font-sans text-gray-500">
               <Link to={"/dashboard/servercopytonidmake"}>
                 <FaRegAddressCard width={16} height={16} />
                 সার্ভার কপি to এনআইডি মেক

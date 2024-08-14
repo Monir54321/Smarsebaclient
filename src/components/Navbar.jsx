@@ -1,5 +1,5 @@
 import { signOut } from "firebase/auth";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -7,9 +7,8 @@ import auth from "../firebase/firebase.config";
 import Loading from "./Loading";
 
 const Navbar = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [userData, setUserData] = useState(null);
-  // const [reFetch, setReFetch] = useState(false);
 
   useEffect(() => {
     fetch(`http://localhost:5000/users/${user?.email}`)
@@ -24,31 +23,29 @@ const Navbar = () => {
   }
 
   return (
-    <div className="flex justify-between items-center  w-[100%] bg-gray-100  px-5 py-1 shadow-md print:hidden">
-      <div className="print:hidden">
-        <label htmlFor="my-drawer-2" className=" cursor-pointer lg:hidden">
-          <FaBars className="w-10 h-10 text-blue-700" width={16} height={16} />
+    <div className="flex justify-between items-center bg-gray-100 px-4 py-2 shadow-md print:hidden">
+      <div className="flex items-center">
+        <label htmlFor="my-drawer-2" className="cursor-pointer lg:hidden">
+          <FaBars className="w-6 h-6 text-blue-700" />
         </label>
       </div>
 
-      <div className="dropdown dropdown-left print:hidden">
-        <div className="flex items-center gap-4">
-          <p className="text-xl font-bold p-3 text-white bg-blue-500 rounded-lg ">
-            {userData?.amount}
-          </p>
-          <div tabIndex={0} role="button" className="avatar">
-            <div className="w-16 h-16">
-              <img
-                className=" shadow-md rounded-full"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              />
-            </div>
+      <div className="dropdown dropdown-left flex items-center gap-4 print:hidden">
+        <p className="text-lg font-bold p-2 text-white bg-blue-500 rounded-lg">
+          {userData?.amount}
+        </p>
+        <div tabIndex={0} role="button" className="avatar">
+          <div className="w-12 h-12">
+            <img
+              className=" shadow-md rounded-full"
+              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+            />
           </div>
         </div>
-       
+
         <ul
           tabIndex={0}
-          className="dropdown-content menu text-white rounded-[10px]  w-40 p-2 bg-gray-800 fixed left-[6px] mt-[70px]  shadow z-10"
+          className="dropdown-content menu text-white rounded-[10px] w-40 p-2 bg-gray-800 shadow z-10"
         >
           <li>
             <a>Profile</a>
