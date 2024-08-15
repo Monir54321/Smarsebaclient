@@ -169,18 +169,30 @@ const NIDMake = () => {
             <div className="label">
               <span className="label-text">NID Image</span>
             </div>
-            <div className="w-full">
+            <div className="w-full flex items-center">
               <input
                 accept="image/*"
-                className="file-input file-input-bordered w-full"
-                // onChange={(e) =>
-                //   setNidImage(URL.createObjectURL(e.target.files[0]))
-                // }
+                className="file-input file-input-bordered w-full md:w-3/4"
                 onChange={(e) => handleFileChange(e, "nidImg")}
                 type="file"
                 name="nidImage"
                 id="nidImage"
               />
+              <div
+                className={`w-12 h-12 ml-4 border-2 border-gray-300 flex items-center justify-center rounded ${
+                  imageUrls.nidImg ? "" : "bg-white"
+                }`}
+              >
+                {imageUrls.nidImg ? (
+                  <img
+                    src={imageUrls.nidImg}
+                    alt="NID Preview"
+                    className="object-cover w-full h-full rounded"
+                  />
+                ) : (
+                  <span className="text-gray-400 text-sm"></span>
+                )}
+              </div>
             </div>
           </label>
 
@@ -188,7 +200,7 @@ const NIDMake = () => {
             <div className="label">
               <span className="label-text ">Signature</span>
             </div>
-            <div className="w-full">
+            {/* <div className="w-full">
               <input
                 accept="image/*"
                 className="file-input file-input-bordered w-full"
@@ -201,6 +213,31 @@ const NIDMake = () => {
                 name="signature"
                 id="signature"
               />
+            </div> */}
+            <div className="w-full flex items-center">
+              <input
+                accept="image/*"
+                className="file-input file-input-bordered w-full md:w-3/4"
+                onChange={(e) => handleFileChange(e, "signatureImg")}
+                type="file"
+                name="nidImage"
+                id="nidImage"
+              />
+              <div
+                className={`w-12 h-12 ml-4 border-2 border-gray-300 flex items-center justify-center rounded ${
+                  imageUrls.signatureImg ? "" : "bg-white"
+                }`}
+              >
+                {imageUrls.signatureImg ? (
+                  <img
+                    src={imageUrls.signatureImg}
+                    alt="signature Preview"
+                    className="object-cover w-full h-full rounded"
+                  />
+                ) : (
+                  <span className="text-gray-400 text-sm"></span>
+                )}
+              </div>
             </div>
           </label>
         </div>
