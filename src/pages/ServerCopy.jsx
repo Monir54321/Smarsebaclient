@@ -92,8 +92,7 @@ const ServerCopy = () => {
         >
           {loading ? (
             <>
-              <span className="loading loading-spinner text-info"></span>
-              <span className="ml-2">Submitting...</span>
+              <span className="loading loading-spinner text-white bg-primary"></span>
             </>
           ) : (
             "Submit"

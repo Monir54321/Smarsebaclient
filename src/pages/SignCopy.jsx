@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -172,8 +173,17 @@ const SignCopy = () => {
           />
         </label>
 
-        <button className="btn w-full mt-4 btn-primary text-white">
-          Submit
+        <button
+          className="btn w-full mt-4 btn-primary text-white"
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <span className="loading loading-spinner text-white bg-primary"></span>
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
 
