@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../firebase/firebase.config";
 import Loading from "../components/Loading";
@@ -6,7 +7,7 @@ import toast from "react-hot-toast";
 import { MdDelete, MdDownload } from "react-icons/md";
 
 const SaftyTika = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [myOrders, setMyOrders] = useState(null);
   const [reFetch, setReFetch] = useState(false);
 
