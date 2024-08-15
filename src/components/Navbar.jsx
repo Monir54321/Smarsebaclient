@@ -1,7 +1,8 @@
 import { signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaUserCircle } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 import auth from "../firebase/firebase.config";
 import Loading from "./Loading";
@@ -36,10 +37,11 @@ const Navbar = () => {
         </p>
         <div tabIndex={0} role="button" className="avatar">
           <div className="w-12 h-12">
-            <img
+            {/* <img
               className=" shadow-md rounded-full"
               src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-            />
+            /> */}
+            <FaUserCircle className=" shadow-md rounded-full   w-10 h-10 mt-1" />
           </div>
         </div>
 

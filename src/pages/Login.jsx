@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+/* eslint-disable react/no-unescaped-entities */
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   useAuthState,
@@ -12,13 +13,13 @@ import auth from "../firebase/firebase.config";
 import { FcGoogle } from "react-icons/fc";
 
 const LogIn = () => {
-  const { aUser, aLoading } = useAuthState(auth);
+  const { aUser } = useAuthState(auth);
   // console.log(http://localhost:5000);
-  const [signInWithEmailAndPassword, user, loading, error] =
+  const [signInWithEmailAndPassword, user] =
     useSignInWithEmailAndPassword(auth);
   const navigate = useNavigate();
 
-  const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+  const [signInWithGoogle, gUser] = useSignInWithGoogle(auth);
 
   useEffect(() => {
     if (user || gUser || aUser) {
@@ -53,7 +54,7 @@ const LogIn = () => {
         className="flex justify-center items-center min-h-screen"
       >
         <div className="flex flex-col w-[800px] gap-5 md:m-10 bg-[#ffffff] shadow-md p-5 h-fit">
-          <img className="w-28 mx-auto" src={logo} lt="" />
+          <img className="w-28 mx-auto" src={logo} alt="" />
           <h2 className="text-center text-xl font-semibold ">Welcome back!</h2>
 
           <label className="input input-bordered flex items-center gap-2">
@@ -102,9 +103,7 @@ const LogIn = () => {
             </Link>
           </p>
 
-          <button type="submit" className="btn btn-primary text-white">
-            Login
-          </button>
+          <button className="btn w-full  btn-primary text-white">Login</button>
           <div onClick={() => handleGoogleLogin()} className="btn w-full">
             <div className="flex items-center gap-2">
               <FcGoogle size={24} />
