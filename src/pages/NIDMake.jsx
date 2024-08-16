@@ -137,7 +137,7 @@ const NIDMake = () => {
         </a>
       </div>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
-        <div className="border-gray-800 border-2 border-dotted rounded-md mb-3  md:w-[300px]  ">
+        <div className="border-gray-800 border-2 border-dotted rounded-md my-5  md:w-[300px]  ">
           <label className="cursor-pointer ">
             <img
               className="w-20 h-20 md:w-28 md:h-28 mx-auto"
@@ -164,22 +164,22 @@ const NIDMake = () => {
           </label>
         </div>
 
-        <div className="grid grid-cols-1  w-full">
-          <label className="w-full">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
+          <label className="">
             <div className="label">
               <span className="label-text">NID Image</span>
             </div>
-            <div className="w-full flex items-center">
+            <div className=" flex items-center">
               <input
                 accept="image/*"
-                className="file-input file-input-bordered w-full md:w-3/4"
+                className="file-input file-input-bordered w-full "
                 onChange={(e) => handleFileChange(e, "nidImg")}
                 type="file"
                 name="nidImage"
                 id="nidImage"
               />
               <div
-                className={`w-12 h-12 ml-4 border-2 border-gray-300 flex items-center justify-center rounded ${
+                className={`w-14 h-12 ml-4 border-2 border-gray-300 rounded ${
                   imageUrls.nidImg ? "" : "bg-white"
                 }`}
               >
@@ -195,36 +195,22 @@ const NIDMake = () => {
               </div>
             </div>
           </label>
-
-          <label className="w-full">
+          <label className="">
             <div className="label">
               <span className="label-text ">Signature</span>
             </div>
-            {/* <div className="w-full">
+
+            <div className="flex items-center">
               <input
                 accept="image/*"
                 className="file-input file-input-bordered w-full"
-                // onChange={(e) =>
-                //   setSignature(URL.createObjectURL(e.target.files[0]))
-                // }
-
-                onChange={(e) => handleFileChange(e, "signatureImg")}
-                type="file"
-                name="signature"
-                id="signature"
-              />
-            </div> */}
-            <div className="w-full flex items-center">
-              <input
-                accept="image/*"
-                className="file-input file-input-bordered w-full md:w-3/4"
                 onChange={(e) => handleFileChange(e, "signatureImg")}
                 type="file"
                 name="nidImage"
                 id="nidImage"
               />
               <div
-                className={`w-12 h-12 ml-4 border-2 border-gray-300 flex items-center justify-center rounded ${
+                className={`w-14 h-12 ml-4 border-2 border-gray-300 rounded ${
                   imageUrls.signatureImg ? "" : "bg-white"
                 }`}
               >
@@ -242,7 +228,7 @@ const NIDMake = () => {
           </label>
         </div>
 
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 w-full">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">নামঃ (বাংলা)</span>
@@ -267,7 +253,7 @@ const NIDMake = () => {
           </label>
         </div>
 
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 w-full">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">আইডি নাম্বার</span>
@@ -292,33 +278,7 @@ const NIDMake = () => {
           </label>
         </div>
 
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 w-full">
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">পিতার নাম</span>
-            </div>
-            <input
-              type="text"
-              placeholder="পিতার নাম"
-              name="fatherNameBangla"
-              className="input input-bordered w-full"
-            />
-          </label>
-
-          {/* <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">স্বামী অথবা স্ত্রী নাম</span>
-            </div>
-            <input
-              type="text"
-              placeholder="স্বামী অথবা স্ত্রী নাম"
-              name="husbandWifeName"
-              className="input input-bordered w-full"
-            />
-          </label> */}
-        </div>
-
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 w-full">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">মাতার নাম</span>
@@ -344,7 +304,7 @@ const NIDMake = () => {
           </label>
         </div>
 
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 w-full">
+        <div className="grid  gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">জন্ম তারিখ</span>
