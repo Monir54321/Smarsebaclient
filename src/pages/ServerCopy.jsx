@@ -1,7 +1,11 @@
 import { useState } from "react";
+import useManageOrderData from "../utils/getManageOrder";
 import ServerCopyResult from "./ServerCopyResult";
 
 const ServerCopy = () => {
+  const { data } = useManageOrderData();
+  const statusData = data?.find((item) => item.title === "সার্ভার কপি");
+
   const [nidData, setNidData] = useState(null);
   const [nidAddressData, setNidAddressData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -10,8 +14,6 @@ const ServerCopy = () => {
     e.preventDefault();
     const nidNumber = e?.target?.NIDNumber?.value;
     const dateOfBirth = e?.target?.dateOfBirth?.value;
-
-    console.log("nid dob", nidNumber, dateOfBirth);
 
     setLoading(true);
 
@@ -88,7 +90,7 @@ const ServerCopy = () => {
 
         <button
           className="btn w-full mt-4 btn-primary text-white flex justify-center items-center"
-          disabled={loading}
+          disabled={loading || statusData?.status === "inactive"}
         >
           {loading ? (
             <>
