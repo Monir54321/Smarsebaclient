@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../firebase/firebase.config";
-import Loading from "../components/Loading";
 import toast from "react-hot-toast";
 import { MdDelete, MdDownload } from "react-icons/md";
+import Loading from "../components/Loading";
+import auth from "../firebase/firebase.config";
 
 const NogodInfo = () => {
   const [user, loading, error] = useAuthState(auth);
   const [myOrders, setMyOrders] = useState(null);
   const [reFetch, setReFetch] = useState(false);
 
-  if (loading) {
-    return <Loading />;
-  }
+  
 
   useEffect(() => {
     fetch(`http://localhost:5000/nogodInfoOrders/user/${user?.email}`)
@@ -76,6 +74,10 @@ const NogodInfo = () => {
         }
       });
   };
+
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="w-full p-10 min-h-screen ">
       <form onSubmit={handleSubmit} className="flex flex-col items-center">

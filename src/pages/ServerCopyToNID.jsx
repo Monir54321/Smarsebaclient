@@ -1,7 +1,14 @@
+
 const ServerCopyToNID = () => {
+
+
+  // const status = 
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+
   return (
     <div className="w-full p-10 min-h-screen ">
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
