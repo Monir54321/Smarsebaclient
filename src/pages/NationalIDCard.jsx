@@ -6,6 +6,7 @@
 
 import { useEffect } from "react";
 import "./NationalIDCard.css";
+import useManageOrderData from "../utils/getManageOrder";
 
 // import {generateBarcode as PDF417} from "pdf417";
 
@@ -24,7 +25,7 @@ const NationalIDCard = ({ info }) => {
     birthLocation,
     location,
     applyDate,
-    pinNumber
+    pinNumber,
   } = info;
 
   /* var hub3_code = '<pin>{{pinn}}</pin><name>{{name_english}}</name><DOB>{{birth}}</DOB><FP></FP><F>Right Index</F><TYPE></TYPE><V>2.0</V> <ds>302c0214103fc01240542ed736c0b48858c1c03d80006215021416e73728de9618fedcd368c88d8f3a2e72096d</ds>';

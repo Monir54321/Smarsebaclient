@@ -4,8 +4,11 @@ import auth from "../firebase/firebase.config";
 import Loading from "../components/Loading";
 import toast from "react-hot-toast";
 import { MdDelete, MdDownload } from "react-icons/md";
+import useManageOrderData from "../utils/getManageOrder";
 
 const BikashInfo = () => {
+  const { data } = useManageOrderData();
+  const statusData = data?.find((item) => item.title === "বিকাশ ইনফো");
   const [user, loading] = useAuthState(auth);
   const [myOrders, setMyOrders] = useState(null);
   const [reFetch, setReFetch] = useState(false);
@@ -126,8 +129,17 @@ const BikashInfo = () => {
           />
         </label>
 
-        <button className="btn w-full  mt-4 btn-primary text-white">
-          Submit
+        <button
+          className="btn w-full mt-4 btn-primary text-white"
+          disabled={loading || statusData?.status === "inactive"}
+        >
+          {loading ? (
+            <>
+              <span className="loading loading-spinner text-white bg-primary"></span>
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
 

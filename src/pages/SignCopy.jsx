@@ -5,8 +5,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../firebase/firebase.config";
 import toast from "react-hot-toast";
 import { MdDelete, MdDownload } from "react-icons/md";
+import useManageOrderData from "../utils/getManageOrder";
 
 const SignCopy = () => {
+  const { data } = useManageOrderData();
+  const statusData = data?.find((item) => item.title === "সাইন কপি");
   const [user, loading] = useAuthState(auth);
   const [myOrders, setMyOrders] = useState(null);
   const [reFetch, setReFetch] = useState(false);
@@ -175,7 +178,7 @@ const SignCopy = () => {
 
         <button
           className="btn w-full mt-4 btn-primary text-white"
-          disabled={loading}
+          disabled={loading || statusData?.status === "inactive"}
         >
           {loading ? (
             <>
