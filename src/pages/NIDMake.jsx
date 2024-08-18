@@ -235,7 +235,7 @@ const NIDMake = () => {
                 console.log(data);
               }
             });
-            
+
           setInfo((prevState) => ({
             ...prevState,
             formData,
@@ -380,7 +380,7 @@ const NIDMake = () => {
           </label>
         </div>
 
-        <div className="grid gap-3 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 w-full">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">আইডি নাম্বার</span>
@@ -405,7 +405,8 @@ const NIDMake = () => {
               defaultValue={responseData?.pin}
             />
           </label>
-
+        </div>
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">পিতার নাম</span>
@@ -418,9 +419,6 @@ const NIDMake = () => {
               defaultValue={responseData?.father}
             />
           </label>
-        </div>
-
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">মাতার নাম</span>
@@ -433,7 +431,8 @@ const NIDMake = () => {
               defaultValue={responseData?.mother}
             />
           </label>
-
+        </div>
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">জন্ম স্থান:</span>
@@ -446,9 +445,6 @@ const NIDMake = () => {
               defaultValue={responseData?.birth_place}
             />
           </label>
-        </div>
-
-        <div className="grid  gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">জন্ম তারিখ</span>
@@ -461,6 +457,9 @@ const NIDMake = () => {
               defaultValue={responseData?.birth}
             />
           </label>
+        </div>
+
+        <div className="grid  gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">প্রধানের তারিখঃ</span>
@@ -474,21 +473,21 @@ const NIDMake = () => {
               className="input input-bordered w-full"
             />
           </label>
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text">রক্তের গ্রপ</span>
+            </div>
+            <input
+              type="text"
+              placeholder="রক্তের গ্রপঃ"
+              name="bloodGroup"
+              className="input input-bordered w-full"
+              defaultValue={responseData?.blood}
+            />
+          </label>
         </div>
-        <label className="form-control w-full">
-          <div className="label">
-            <span className="label-text">রক্তের গ্রপ</span>
-          </div>
-          <input
-            type="text"
-            placeholder="রক্তের গ্রপঃ"
-            name="bloodGroup"
-            className="input input-bordered w-full"
-            defaultValue={responseData?.blood}
-          />
-        </label>
 
-        <label className="form-control w-full mt-3">
+        <label className="form-control w-full ">
           <div className="label">
             <span className="label-text">ঠিকানাঃ</span>
           </div>
