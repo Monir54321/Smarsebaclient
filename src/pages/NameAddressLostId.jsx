@@ -3,8 +3,13 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../firebase/firebase.config";
 import Loading from "../components/Loading";
 import toast from "react-hot-toast";
+import useManageOrderData from "../utils/getManageOrder";
 
 const NameAddressLostId = () => {
+  const { data } = useManageOrderData();
+  const statusData = data?.find(
+    (item) => item.title === "নাম ঠিকনা (হারানো আইডি)"
+  );
   const [user, loading, error] = useAuthState(auth);
   const [myOrders, setMyOrders] = useState(null);
 
@@ -259,8 +264,17 @@ const NameAddressLostId = () => {
           />
         </label>
 
-        <button className="btn w-full  mt-4 btn-primary text-white">
-          Submit
+        <button
+          className="btn w-full mt-4 btn-primary text-white flex justify-center items-center"
+          disabled={loading || statusData?.status === "inactive"}
+        >
+          {loading ? (
+            <>
+              <span className="loading loading-spinner text-white bg-primary"></span>
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
     </div>

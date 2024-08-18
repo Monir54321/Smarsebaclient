@@ -4,8 +4,11 @@ import auth from "../firebase/firebase.config";
 import Loading from "../components/Loading";
 import { MdDelete, MdDownload } from "react-icons/md";
 import toast from "react-hot-toast";
+import useManageOrderData from "../utils/getManageOrder";
 
 const BirthCertificateOnline = () => {
+  const { data } = useManageOrderData();
+  const statusData = data?.find((item) => item.title === "জন্ম নিবন্ধন");
   const [user, loading, error] = useAuthState(auth);
   const [myOrders, setMyOrders] = useState(null);
   const [reFetch, setReFetch] = useState(false);
@@ -422,9 +425,17 @@ const BirthCertificateOnline = () => {
             className="input input-bordered w-full"
           />
         </label>
-
-        <button className="btn w-full  mt-4 btn-primary text-white">
-          Submit
+        <button
+          className="btn w-full mt-4 btn-primary text-white"
+          disabled={loading || statusData?.status === "inactive"}
+        >
+          {loading ? (
+            <>
+              <span className="loading loading-spinner text-white bg-primary"></span>
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
 
