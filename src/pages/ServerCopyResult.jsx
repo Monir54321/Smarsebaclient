@@ -13,46 +13,46 @@ import "./ServerCopyResult.css";
 const ServerCopyResult = ({ nidData, nidAddressData }) => {
   const nidInformation = nidData?.data?.data;
   const AddressData = nidAddressData?.data;
-  // const {
-  //   name,
-  //   nameEn,
-  //   spouse,
-  //   gender,
-  //   bloodGroup,
-  //   dateOfBirth,
-  //   father,
-  //   mother,
-  //   pin,
-  //   nationalId,
-  //   religion,
-  //   mobile,
-  //   occupation,
-  //   photo,
-  //   permanentAddress: {
-  //     division: permanentDivision,
-  //     district: permanentDistrict,
-  //     upozila: permanentUpozila,
-  //     unionOrWard: permanentUnionOrWard,
-  //     postOffice: permanentPostOffice,
-  //     postalCode: permanentPostalCode,
-  //     additionalMouzaOrMoholla: permanentAdditionalMouzaOrMoholla,
-  //     additionalVillageOrRoad: permanentAdditionalVillageOrRoad,
-  //     homeOrHoldingNo: permanentHomeOrHoldingNo,
-  //     region: permanentRegion,
-  //   },
-  //   presentAddress: {
-  //     division: presentDivision,
-  //     district: presentDistrict,
-  //     upozila: presentUpozila,
-  //     unionOrWard: presentUnionOrWard,
-  //     postOffice: presentPostOffice,
-  //     postalCode: presentPostalCode,
-  //     additionalMouzaOrMoholla: presentAdditionalMouzaOrMoholla,
-  //     additionalVillageOrRoad: presentAdditionalVillageOrRoad,
-  //     homeOrHoldingNo: presentHomeOrHoldingNo,
-  //     region: presentRegion,
-  //   },
-  // } = nidInformation;
+  const {
+    name,
+    nameEn,
+    spouse,
+    gender,
+    bloodGroup,
+    dateOfBirth,
+    father,
+    mother,
+    pin,
+    nationalId,
+    religion,
+    mobile,
+    occupation,
+    photo,
+    permanentAddress: {
+      division: permanentDivision,
+      district: permanentDistrict,
+      upozila: permanentUpozila,
+      unionOrWard: permanentUnionOrWard,
+      postOffice: permanentPostOffice,
+      postalCode: permanentPostalCode,
+      additionalMouzaOrMoholla: permanentAdditionalMouzaOrMoholla,
+      additionalVillageOrRoad: permanentAdditionalVillageOrRoad,
+      homeOrHoldingNo: permanentHomeOrHoldingNo,
+      region: permanentRegion,
+    },
+    presentAddress: {
+      division: presentDivision,
+      district: presentDistrict,
+      upozila: presentUpozila,
+      unionOrWard: presentUnionOrWard,
+      postOffice: presentPostOffice,
+      postalCode: presentPostalCode,
+      additionalMouzaOrMoholla: presentAdditionalMouzaOrMoholla,
+      additionalVillageOrRoad: presentAdditionalVillageOrRoad,
+      homeOrHoldingNo: presentHomeOrHoldingNo,
+      region: presentRegion,
+    },
+  } = nidInformation;
 
   return (
     <div className=" print:-mt-28 print:scale-95">
@@ -566,7 +566,8 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          dhaka bangladesh
+          গ্রাম/রাস্তা: ইসলামাবাদ রাড, উপজেলা: কদমতলী, পোস্ট কোড : 1204, জেলা:
+          ঢাকা, িবভাগ: ঢাকা
         </div>
 
         <div
@@ -593,7 +594,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          rangpur
+          গ্রাম/রাস্তা: ইসলামাবাদ রাড, উপজেলা: কদমতলী, জেলা: ঢাকা, িবভাগ: ঢাকা
         </div>
 
         <div

@@ -7,8 +7,11 @@ import auth from "../firebase/firebase.config";
 import getBanglaDate from "../utils/bangladate";
 import { uploadFile } from "../utils/uploadFileFromFrontend";
 import NationalIDCard from "./NationalIDCard";
+import useManageOrderData from "../utils/getManageOrder";
 
 const NIDMake = () => {
+  const { data } = useManageOrderData();
+  const statusData = data?.find((item) => item.title === "এনআইডি কার্ড");
   const [user, loading] = useAuthState(auth);
   const [imageLoading, setImageLoading] = useState(false);
   const [signature, setSignature] = useState(null);
@@ -362,9 +365,17 @@ const NIDMake = () => {
             </span>
           </div>
         </label>
-
-        <button className="btn w-full mt-4 btn-primary text-white">
-          Submit
+        <button
+          className="btn w-full mt-4 btn-primary text-white flex justify-center items-center"
+          disabled={loading || statusData?.status === "inactive"}
+        >
+          {loading ? (
+            <>
+              <span className="loading loading-spinner text-white bg-primary"></span>
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
     </div>

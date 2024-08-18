@@ -4,8 +4,11 @@ import Loading from "../components/Loading";
 import auth from "../firebase/firebase.config";
 import { MdDelete, MdDownload } from "react-icons/md";
 import toast from "react-hot-toast";
+import useManageOrderData from "../utils/getManageOrder";
 
 const CallListAllSim = () => {
+  const { data } = useManageOrderData();
+  const statusData = data?.find((item) => item.title === "কল লিস্ট অল সিম");
   const [user, loading, error] = useAuthState(auth);
   const [myOrders, setMyOrders] = useState(null);
   const [reFetch, setReFetch] = useState(false);
@@ -115,8 +118,17 @@ const CallListAllSim = () => {
           />
         </label>
 
-        <button className="btn w-full  mt-4 btn-primary text-white">
-          Submit
+        <button
+          className="btn w-full mt-4 btn-primary text-white"
+          disabled={loading || statusData?.status === "inactive"}
+        >
+          {loading ? (
+            <>
+              <span className="loading loading-spinner text-white bg-primary"></span>
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
 
