@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
@@ -5,12 +6,13 @@ import writeImage from "../assets/Mack.png";
 import Loading from "../components/Loading";
 import auth from "../firebase/firebase.config";
 import getBanglaDate from "../utils/bangladate";
+import useManageOrderData from "../utils/getManageOrder";
 import { uploadFile } from "../utils/uploadFileFromFrontend";
 import NationalIDCard from "./NationalIDCard";
-import useManageOrderData from "../utils/getManageOrder";
 
 const NIDMake = () => {
   const { data } = useManageOrderData();
+  const [isRedirect, setIsRedirect] = useState(false);
   const statusData = data?.find((item) => item.title === "এনআইডি কার্ড");
   const [user, loading] = useAuthState(auth);
   const [imageLoading, setImageLoading] = useState(false);
@@ -18,29 +20,65 @@ const NIDMake = () => {
   const [nidImage, setNidImage] = useState(null);
   const [signCopy, setSignCopy] = useState(null);
   const [myOrders, setMyOrders] = useState(null);
-  const [info, setInfo] = useState(null);
-  const [imageUrls, setImageUrls] = useState({
-    nidImg: "",
-    signatureImg: "",
-  });
 
-  console.log("imageUrls", imageUrls);
+  const [error, setError] = useState("");
+
+  const [responseData, setResponseData] = useState(null);
+
+  const [imageUrls, setImageUrls] = useState({
+    nidImg: "", // Fixed the closing backtick
+    signatureImg: "", // Added the closing backtick
+  });
 
   const today = getBanglaDate();
 
-  useEffect(() => {
-    window.onload =
-      "https://barcode.tec-it.com/barcode.ashx?data=Your+nid+data&code=PDF417&download=true ";
-  }, []);
+  const [info, setInfo] = useState({
+    title: "এনআইডি কার্ড",
+    signature: imageUrls.signatureImg,
+    nidImage: imageUrls.nidImg,
+    nameBangla: "",
+    nameEnglish: "",
+    idNumber: "",
+    pinNumber: "",
+    fatherNameBangla: "",
+    motherName: "",
+    birthLocation: "",
+    dateOfBirth: "",
+    applyDate: "",
+    bloodGroup: "",
+    location: "",
+    email: user.email,
+    applyDate: today,
+  });
 
   useEffect(() => {
     fetch(`http://localhost:5000/nidMakes/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setMyOrders(data?.data);
-        console.log(data);
       });
   }, [user]);
+
+  useEffect(() => {
+    if (responseData) {
+      setImageUrls({
+        nidImg: responseData.photo || "",
+        signatureImg: responseData.sign || "",
+      });
+      setInfo({
+        nameBangla: responseData?.nameBen,
+        birthLocation: responseData?.birth_place,
+        dateOfBirth: responseData?.birth,
+        bloodGroup: responseData?.blood,
+        location: responseData?.address,
+        nameEnglish: responseData?.nameEng,
+        fatherNameBangla: responseData?.father,
+        motherName: responseData?.mother,
+        idNumber: responseData?.national_id,
+        pinNumber: responseData?.pin,
+      });
+    }
+  }, [responseData]);
 
   const handleFileChange = async (event, fieldName) => {
     setImageLoading(true);
@@ -58,39 +96,120 @@ const NIDMake = () => {
     }
   };
 
+  const handleSignCopyUpload = async (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (!file) {
+      setError("Please select a file.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("pdf_file", file);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/upload-pdf",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      setResponseData(response.data);
+    } catch (error) {
+      setError("Error uploading file.");
+      console.error("Error uploading file:", error);
+    }
+  };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setIsRedirect(false);
+  //   const title = "এনআইডি কার্ড";
+  //   const nameBangla = e.target.nameBangla.value;
+  //   const nameEnglish = e.target.nameEnglish.value;
+  //   const idNumber = e.target.idNumber.value;
+  //   const pinNumber = e.target.pinNumber.value;
+  //   const fatherNameBangla = e.target.fatherNameBangla.value;
+  //   // const husbandWifeName = e.target.husbandWifeName.value;
+  //   const motherName = e.target.motherName.value;
+  //   const birthLocation = e.target.birthLocation.value;
+  //   const dateOfBirth = e.target.dateOfBirth.value;
+  //   const applyDate = e.target.applyDate.value;
+  //   const bloodGroup = e.target.bloodGroup.value;
+  //   const location = e.target.location.value;
+
+  //   const info = {
+  //     title,
+  //     signature: imageUrls.signatureImg,
+  //     nidImage: imageUrls.nidImg,
+  //     nameBangla,
+  //     nameEnglish,
+  //     idNumber,
+  //     pinNumber,
+  //     fatherNameBangla,
+  //     // husbandWifeName,
+  //     motherName,
+  //     birthLocation,
+  //     dateOfBirth,
+  //     applyDate,
+  //     bloodGroup,
+  //     location,
+  //     email: user.email,
+  //   };
+
+  //   fetch(`http://localhost:5000/users/${user.email}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data?.data?.amount >= 5) {
+  //         fetch("http://localhost:5000/nidMakes/", {
+  //           method: "POST",
+  //           headers: {
+  //             Accept: "application/json",
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify(info),
+  //         })
+  //           .then((res) => res.json())
+  //           .then((data) => {
+  //             if (data.status == "Success") {
+  //               toast.success(data.message);
+  //               e.target.reset();
+  //               console.log(data);
+  //             } else {
+  //               toast.error(data.message);
+  //               console.log(data);
+  //             }
+  //           });
+  //         setInfo(info);
+  //         setIsRedirect(true);
+  //       } else {
+  //         toast.error(data.message);
+  //         console.log(data);
+  //       }
+  //     });
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const title = "এনআইডি কার্ড";
-    const nameBangla = e.target.nameBangla.value;
-    const nameEnglish = e.target.nameEnglish.value;
-    const idNumber = e.target.idNumber.value;
-    const pinNumber = e.target.pinNumber.value;
-    const fatherNameBangla = e.target.fatherNameBangla.value;
-    // const husbandWifeName = e.target.husbandWifeName.value;
-    const motherName = e.target.motherName.value;
-    const birthLocation = e.target.birthLocation.value;
-    const dateOfBirth = e.target.dateOfBirth.value;
-    const applyDate = e.target.applyDate.value;
-    const bloodGroup = e.target.bloodGroup.value;
-    const location = e.target.location.value;
+    setIsRedirect(false);
 
-    const info = {
-      title,
-      signature: imageUrls.signatureImg,
-      nidImage: imageUrls.nidImg,
-      nameBangla,
-      nameEnglish,
-      idNumber,
-      pinNumber,
-      fatherNameBangla,
-      // husbandWifeName,
-      motherName,
-      birthLocation,
-      dateOfBirth,
-      applyDate,
-      bloodGroup,
-      location,
-      email: user.email,
+    const form = e.target;
+
+    const formData = {
+      nameBangla: form.nameBangla.value,
+      nameEnglish: form.nameEnglish.value,
+      idNumber: form.idNumber.value,
+      pinNumber: form.pinNumber.value,
+      fatherNameBangla: form.fatherNameBangla.value,
+      motherName: form.motherName.value,
+      birthLocation: form.birthLocation.value,
+      dateOfBirth: form.dateOfBirth.value,
+      bloodGroup: form.bloodGroup.value,
+      location: form.location.value,
     };
 
     fetch(`http://localhost:5000/users/${user.email}`)
@@ -107,7 +226,7 @@ const NIDMake = () => {
           })
             .then((res) => res.json())
             .then((data) => {
-              if (data.status == "Success") {
+              if (data.status === "Success") {
                 toast.success(data.message);
                 e.target.reset();
                 console.log(data);
@@ -116,7 +235,13 @@ const NIDMake = () => {
                 console.log(data);
               }
             });
-          setInfo(info);
+            
+          setInfo((prevState) => ({
+            ...prevState,
+            formData,
+          }));
+
+          setIsRedirect(true);
         } else {
           toast.error(data.message);
           console.log(data);
@@ -128,17 +253,14 @@ const NIDMake = () => {
     return <Loading />;
   }
 
-  if (info) {
+  console.log("info", info);
+
+  if (isRedirect && info) {
     return <NationalIDCard info={info} />;
   }
 
   return (
     <div className="w-full p-10 min-h-screen">
-      <div>
-        <a href="https://barcode.tec-it.com/barcode.ashx?data=Your+nid+data&code=PDF417&download=true ">
-          barcode
-        </a>
-      </div>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <div className="border-gray-800 border-2 border-dotted rounded-md my-5  md:w-[300px]  ">
           <label className="cursor-pointer ">
@@ -152,9 +274,7 @@ const NIDMake = () => {
             <input
               className="hidden"
               accept="application/pdf"
-              onChange={(e) =>
-                setSignCopy(URL.createObjectURL(e.target.files[0]))
-              }
+              onChange={(e) => handleSignCopyUpload(e)}
               type="file"
               name="nidImage"
               id="nidImage"
@@ -188,7 +308,7 @@ const NIDMake = () => {
               >
                 {imageUrls.nidImg ? (
                   <img
-                    src={imageUrls.nidImg}
+                    src={responseData?.photo || imageUrls.nidImg}
                     alt="NID Preview"
                     className="object-cover w-full h-full rounded"
                   />
@@ -242,6 +362,7 @@ const NIDMake = () => {
               type="text"
               placeholder="নামঃ (বাংলা)"
               name="nameBangla"
+              defaultValue={responseData?.nameBen}
               className="input input-bordered w-full"
             />
           </label>
@@ -254,11 +375,12 @@ const NIDMake = () => {
               placeholder="নামঃ (ইংরেজী)"
               name="nameEnglish"
               className="input input-bordered w-full"
+              defaultValue={responseData?.nameEng}
             />
           </label>
         </div>
 
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
+        <div className="grid gap-3 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 w-full">
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">আইডি নাম্বার</span>
@@ -268,6 +390,7 @@ const NIDMake = () => {
               placeholder="আইডি নাম্বারঃ"
               name="idNumber"
               className="input input-bordered w-full"
+              defaultValue={responseData?.national_id}
             />
           </label>
           <label className="form-control w-full">
@@ -279,6 +402,20 @@ const NIDMake = () => {
               placeholder="পিন নাম্বারঃ"
               name="pinNumber"
               className="input input-bordered w-full"
+              defaultValue={responseData?.pin}
+            />
+          </label>
+
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text">পিতার নাম</span>
+            </div>
+            <input
+              type="text"
+              placeholder="পিতার নাম"
+              name="fatherNameBangla"
+              className="input input-bordered w-full"
+              defaultValue={responseData?.father}
             />
           </label>
         </div>
@@ -293,6 +430,7 @@ const NIDMake = () => {
               placeholder="মাতার নাম"
               name="motherName"
               className="input input-bordered w-full"
+              defaultValue={responseData?.mother}
             />
           </label>
 
@@ -305,6 +443,7 @@ const NIDMake = () => {
               placeholder="জন্ম স্থান"
               name="birthLocation"
               className="input input-bordered w-full"
+              defaultValue={responseData?.birth_place}
             />
           </label>
         </div>
@@ -319,6 +458,7 @@ const NIDMake = () => {
               placeholder="জন্ম তারিখঃ:"
               name="dateOfBirth"
               className="input input-bordered w-full"
+              defaultValue={responseData?.birth}
             />
           </label>
           <label className="form-control w-full">
@@ -344,6 +484,7 @@ const NIDMake = () => {
             placeholder="রক্তের গ্রপঃ"
             name="bloodGroup"
             className="input input-bordered w-full"
+            defaultValue={responseData?.blood}
           />
         </label>
 
@@ -356,6 +497,7 @@ const NIDMake = () => {
             placeholder="ঠিকানা: বাসা/হোল্ডিং: (Holding), গ্রাম/রাস্তা: (গ্রাম, মৌজা), ডাকঘর: (Post Office - Postal Code), উপজেলা, সিটি কর্পোরেশন/পৌরসভা, জেলা"
             name="location"
             className="input input-bordered w-full h-24"
+            defaultValue={responseData?.address}
           />
           <div className="label">
             <span className="label-text">
