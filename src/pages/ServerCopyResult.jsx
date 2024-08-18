@@ -13,65 +13,46 @@ import "./ServerCopyResult.css";
 const ServerCopyResult = ({ nidData, nidAddressData }) => {
   const nidInformation = nidData?.data?.data;
   const AddressData = nidAddressData?.data;
-
-  /*  console.log("🚀 ~ ServerCopyResult ~ nidData:", nidData)
-  let qrName = data?.data?.data.nameEn;
-
-  let qrDob = data?.data?.data?.dateOfBirth;
-  const [qrImage, setQrImage] = useState(null);
-
-  // With async/await
-  const generateQR = async (text) => {
-    try {
-      let res = await QRCode.toDataURL(text);
-      setQrImage(res);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  generateQR(`${qrName} ${qrDob}`);
-
-  // presentAddress
-
-  let presentAddress = data?.data?.data?.permanentAddress;
-
-  let ad = presentAddress ? presentAddress.split(",") : [];
-
-  let division = ad[0] || "";
-  let district = ad[1] || "";
-  let rmo = ad[2] || "";
-  let upazila = ad[3] || "";
-  let union = ad[4] || "";
-  let postname = ad[5] || "";
-  let postcode = ad[6] || "";
-  let ward = ad[7] || "";
-  let village = ad[8] || "";
-  let area = ad[9] || "";
-  let home = ad[10] || "";
-  let birthplace = ad[11] || "";
-
-  let permanentAddress = data?.data?.data?.permanentAddress;
-
-  let pad = permanentAddress ? permanentAddress.split(",") : [];
-
-  let pdivision = pad[0] || "";
-  let pdistrict = pad[1] || "";
-  let prmo = pad[2] || "";
-  let pupazila = pad[3] || "";
-  let punion = pad[4] || "";
-  let ppostname = pad[5] || "";
-  let ppostcode = pad[6] || "";
-  let pward = pad[7] || "";
-  let pvillage = pad[8] || "";
-  let parea = pad[9] || "";
-  let phome = pad[10] || "";
-  let pbirthplace = pad[11] || "";
-
-  const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  }); */
+  // const {
+  //   name,
+  //   nameEn,
+  //   spouse,
+  //   gender,
+  //   bloodGroup,
+  //   dateOfBirth,
+  //   father,
+  //   mother,
+  //   pin,
+  //   nationalId,
+  //   religion,
+  //   mobile,
+  //   occupation,
+  //   photo,
+  //   permanentAddress: {
+  //     division: permanentDivision,
+  //     district: permanentDistrict,
+  //     upozila: permanentUpozila,
+  //     unionOrWard: permanentUnionOrWard,
+  //     postOffice: permanentPostOffice,
+  //     postalCode: permanentPostalCode,
+  //     additionalMouzaOrMoholla: permanentAdditionalMouzaOrMoholla,
+  //     additionalVillageOrRoad: permanentAdditionalVillageOrRoad,
+  //     homeOrHoldingNo: permanentHomeOrHoldingNo,
+  //     region: permanentRegion,
+  //   },
+  //   presentAddress: {
+  //     division: presentDivision,
+  //     district: presentDistrict,
+  //     upozila: presentUpozila,
+  //     unionOrWard: presentUnionOrWard,
+  //     postOffice: presentPostOffice,
+  //     postalCode: presentPostalCode,
+  //     additionalMouzaOrMoholla: presentAdditionalMouzaOrMoholla,
+  //     additionalVillageOrRoad: presentAdditionalVillageOrRoad,
+  //     homeOrHoldingNo: presentHomeOrHoldingNo,
+  //     region: presentRegion,
+  //   },
+  // } = nidInformation;
 
   return (
     <div className=" print:-mt-28 print:scale-95">
@@ -210,7 +191,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          {nidData?.voter?.voter_no}
+          69111564464646
         </div>
         <div
           style={{
@@ -233,7 +214,8 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          {nidData?.data?.data?.pin}
+          {/* {nidData?.data?.data?.pin} */}
+          76446464446
         </div>
 
         <div
