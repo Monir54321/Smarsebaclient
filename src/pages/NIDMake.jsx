@@ -195,6 +195,8 @@ const NIDMake = () => {
               </div>
             </div>
           </label>
+        </div>
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 w-full">
           <label className="">
             <div className="label">
               <span className="label-text ">Signature</span>
