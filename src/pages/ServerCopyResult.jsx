@@ -202,7 +202,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          পিন নম্বর
+          {pin}
         </div>
         <div
           id="nid_father"
@@ -215,7 +215,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
           }}
         >
           {/* {nidData?.data?.data?.pin} */}
-          76446464446
+          {father}
         </div>
 
         <div
@@ -320,7 +320,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          kabir
+          {name}
         </div>
         <div
           style={{
@@ -344,7 +344,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          kabir
+          {nameEn}
         </div>
         <div
           style={{
@@ -367,7 +367,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          19-11-1998
+          {dateOfBirth}
         </div>
         <div
           style={{
@@ -390,7 +390,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          aaaa
+          {father}
         </div>
         <div
           style={{
@@ -413,7 +413,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          bbbb
+          {mother}
         </div>
         <div
           style={{
@@ -436,7 +436,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "black",
           }}
         >
-          cccc
+          {spouse}
         </div>
         <div
           style={{
@@ -470,7 +470,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          male
+          {gender}
         </div>
         <div
           style={{
@@ -493,7 +493,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          kamla
+          {occupation}
         </div>
         <div
           style={{
@@ -516,7 +516,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "red",
           }}
         >
-          b+
+          {bloodGroup}
         </div>
         <div
           style={{
@@ -539,7 +539,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          rangpur
+          {presentDivision}
         </div>
 
         <div
@@ -566,8 +566,9 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          গ্রাম/রাস্তা: ইসলামাবাদ রাড, উপজেলা: কদমতলী, পোস্ট কোড : 1204, জেলা:
-          ঢাকা, িবভাগ: ঢাকা
+          গ্রাম/রাস্তা: {presentAdditionalVillageOrRoad}, উপজেলা:
+          {presentUpozila}, পোস্ট কোড : {presentPostalCode}, জেলা:
+          {presentDistrict} িবভাগ: {presentDivision}
         </div>
 
         <div
@@ -594,7 +595,8 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          গ্রাম/রাস্তা: ইসলামাবাদ রাড, উপজেলা: কদমতলী, জেলা: ঢাকা, িবভাগ: ঢাকা
+          {permanentAdditionalVillageOrRoad}, উপজেলা: {permanentUpozila}, জেলা:{" "}
+          {permanentDistrict}, িবভাগ: {permanentDivision}
         </div>
 
         <div
@@ -683,7 +685,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             textAlign: "center",
           }}
         >
-          <b>Nisharga Kabir</b>
+          <b>{name}</b>
         </div>
       </div>
 
