@@ -7,21 +7,23 @@ import Loading from "../components/Loading";
 import auth from "../firebase/firebase.config";
 import getBanglaDate from "../utils/bangladate";
 import useManageOrderData from "../utils/getManageOrder";
+import validateInfo from "../utils/infoValidation";
 import { uploadFile } from "../utils/uploadFileFromFrontend";
 import NationalIDCard from "./NationalIDCard";
 
 const NIDMake = () => {
   const { data } = useManageOrderData();
   const [isRedirect, setIsRedirect] = useState(false);
+
   const statusData = data?.find((item) => item.title === "এনআইডি কার্ড");
+
   const [user, loading] = useAuthState(auth);
   const [imageLoading, setImageLoading] = useState(false);
-  const [signature, setSignature] = useState(null);
-  const [nidImage, setNidImage] = useState(null);
-  const [signCopy, setSignCopy] = useState(null);
   const [myOrders, setMyOrders] = useState(null);
 
   const [error, setError] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [responseData, setResponseData] = useState(null);
 
@@ -34,8 +36,8 @@ const NIDMake = () => {
 
   const [info, setInfo] = useState({
     title: "এনআইডি কার্ড",
-    signature: imageUrls.signatureImg,
-    nidImage: imageUrls.nidImg,
+    signatureImg: "",
+    nidImg: "",
     nameBangla: "",
     nameEnglish: "",
     idNumber: "",
@@ -44,7 +46,6 @@ const NIDMake = () => {
     motherName: "",
     birthLocation: "",
     dateOfBirth: "",
-    applyDate: "",
     bloodGroup: "",
     location: "",
     email: user.email,
@@ -58,27 +59,6 @@ const NIDMake = () => {
         setMyOrders(data?.data);
       });
   }, [user]);
-
-  useEffect(() => {
-    if (responseData) {
-      setImageUrls({
-        nidImg: responseData.photo || "",
-        signatureImg: responseData.sign || "",
-      });
-      setInfo({
-        nameBangla: responseData?.nameBen,
-        birthLocation: responseData?.birth_place,
-        dateOfBirth: responseData?.birth,
-        bloodGroup: responseData?.blood,
-        location: responseData?.address,
-        nameEnglish: responseData?.nameEng,
-        fatherNameBangla: responseData?.father,
-        motherName: responseData?.mother,
-        idNumber: responseData?.national_id,
-        pinNumber: responseData?.pin,
-      });
-    }
-  }, [responseData]);
 
   const handleFileChange = async (event, fieldName) => {
     setImageLoading(true);
@@ -125,142 +105,99 @@ const NIDMake = () => {
     }
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setIsRedirect(false);
-  //   const title = "এনআইডি কার্ড";
-  //   const nameBangla = e.target.nameBangla.value;
-  //   const nameEnglish = e.target.nameEnglish.value;
-  //   const idNumber = e.target.idNumber.value;
-  //   const pinNumber = e.target.pinNumber.value;
-  //   const fatherNameBangla = e.target.fatherNameBangla.value;
-  //   // const husbandWifeName = e.target.husbandWifeName.value;
-  //   const motherName = e.target.motherName.value;
-  //   const birthLocation = e.target.birthLocation.value;
-  //   const dateOfBirth = e.target.dateOfBirth.value;
-  //   const applyDate = e.target.applyDate.value;
-  //   const bloodGroup = e.target.bloodGroup.value;
-  //   const location = e.target.location.value;
+  useEffect(() => {
+    if (responseData) {
+      setImageUrls({
+        nidImg: responseData.photo || "",
+        signatureImg: responseData.sign || "",
+      });
 
-  //   const info = {
-  //     title,
-  //     signature: imageUrls.signatureImg,
-  //     nidImage: imageUrls.nidImg,
-  //     nameBangla,
-  //     nameEnglish,
-  //     idNumber,
-  //     pinNumber,
-  //     fatherNameBangla,
-  //     // husbandWifeName,
-  //     motherName,
-  //     birthLocation,
-  //     dateOfBirth,
-  //     applyDate,
-  //     bloodGroup,
-  //     location,
-  //     email: user.email,
-  //   };
-
-  //   fetch(`http://localhost:5000/users/${user.email}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data?.data?.amount >= 5) {
-  //         fetch("http://localhost:5000/nidMakes/", {
-  //           method: "POST",
-  //           headers: {
-  //             Accept: "application/json",
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify(info),
-  //         })
-  //           .then((res) => res.json())
-  //           .then((data) => {
-  //             if (data.status == "Success") {
-  //               toast.success(data.message);
-  //               e.target.reset();
-  //               console.log(data);
-  //             } else {
-  //               toast.error(data.message);
-  //               console.log(data);
-  //             }
-  //           });
-  //         setInfo(info);
-  //         setIsRedirect(true);
-  //       } else {
-  //         toast.error(data.message);
-  //         console.log(data);
-  //       }
-  //     });
-  // };
+      setInfo((prevState) => ({
+        ...prevState,
+        nameBangla: responseData?.nameBen || prevState.nameBangla,
+        birthLocation: responseData?.birth_place || prevState.birthLocation,
+        dateOfBirth: responseData?.birth || prevState.dateOfBirth,
+        bloodGroup: responseData?.blood || prevState.bloodGroup,
+        location: responseData?.address || prevState.location,
+        nameEnglish: responseData?.nameEng || prevState.nameEnglish,
+        fatherNameBangla: responseData?.father || prevState.fatherNameBangla,
+        motherName: responseData?.mother || prevState.motherName,
+        idNumber: responseData?.national_id || prevState.idNumber,
+        pinNumber: responseData?.pin || prevState.pinNumber,
+        nidImg: responseData.photo || prevState.nidImg,
+        signatureImg: responseData.sign || prevState.signatureImg,
+      }));
+    }
+  }, [responseData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsRedirect(false);
+    setIsLoading(true);
 
     const form = e.target;
 
+    // Collect form data
     const formData = {
-      nameBangla: form.nameBangla.value,
-      nameEnglish: form.nameEnglish.value,
-      idNumber: form.idNumber.value,
-      pinNumber: form.pinNumber.value,
-      fatherNameBangla: form.fatherNameBangla.value,
-      motherName: form.motherName.value,
-      birthLocation: form.birthLocation.value,
-      dateOfBirth: form.dateOfBirth.value,
-      bloodGroup: form.bloodGroup.value,
-      location: form.location.value,
+      nameBangla: form.nameBangla.value || info.nameBangla,
+      nameEnglish: form.nameEnglish.value || info.nameEnglish,
+      idNumber: form.idNumber.value || info.idNumber,
+      pinNumber: form.pinNumber.value || info.pinNumber,
+      fatherNameBangla: form.fatherNameBangla.value || info.fatherNameBangla,
+      motherName: form.motherName.value || info.motherName,
+      birthLocation: form.birthLocation.value || info.birthLocation,
+      dateOfBirth: form.dateOfBirth.value || info.dateOfBirth,
+      bloodGroup: form.bloodGroup.value || info.bloodGroup,
+      location: form.location.value || info.location,
+      nidImg: imageUrls.nidImg || info.nidImg,
+      signatureImg: imageUrls.signatureImg || info.signatureImg,
     };
 
+    // Fetch user data to check amount
     fetch(`http://localhost:5000/users/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data?.data?.amount >= 5) {
+          // If amount is sufficient, submit the form data
           fetch("http://localhost:5000/nidMakes/", {
             method: "POST",
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(info),
+            body: JSON.stringify({ ...info, ...formData }),
           })
             .then((res) => res.json())
             .then((data) => {
               if (data.status === "Success") {
-                toast.success(data.message);
-                e.target.reset();
-                console.log(data);
+                // toast.success(data.message);
+
+                setInfo((prevState) => ({
+                  ...prevState,
+                  ...formData,
+                }));
+                setIsRedirect(true);
               } else {
                 toast.error(data.message);
-                console.log(data);
               }
             });
-
-          setInfo((prevState) => ({
-            ...prevState,
-            formData,
-          }));
-
-          setIsRedirect(true);
         } else {
           toast.error(data.message);
-          console.log(data);
         }
       });
   };
+
+  console.log("hit", isRedirect, validateInfo(info));
+
+  if (isRedirect && validateInfo(info)) {
+    return <NationalIDCard info={info} />;
+  }
 
   if (loading) {
     return <Loading />;
   }
 
-  console.log("info", info);
-
-  if (isRedirect && info) {
-    return <NationalIDCard info={info} />;
-  }
-
   return (
-    <div className="w-full p-10 min-h-screen">
+    <div className="w-full p-10 min-h-screen ">
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <div className="border-gray-800 border-2 border-dotted rounded-md my-5  md:w-[300px]  ">
           <label className="cursor-pointer ">
@@ -298,8 +235,8 @@ const NIDMake = () => {
                 className="file-input file-input-bordered w-full "
                 onChange={(e) => handleFileChange(e, "nidImg")}
                 type="file"
-                name="nidImage"
-                id="nidImage"
+                name="nidImg"
+                id="nidImg"
               />
               <div
                 className={`w-14 h-12 ml-4 border-2 border-gray-300 rounded ${
@@ -331,8 +268,8 @@ const NIDMake = () => {
                 className="file-input file-input-bordered w-full"
                 onChange={(e) => handleFileChange(e, "signatureImg")}
                 type="file"
-                name="nidImage"
-                id="nidImage"
+                name="signatureImg"
+                id="signatureImg"
               />
               <div
                 className={`w-14 h-12 ml-4 border-2 border-gray-300 rounded ${

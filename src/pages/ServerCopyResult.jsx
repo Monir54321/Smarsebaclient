@@ -10,9 +10,59 @@
 
 import "./ServerCopyResult.css";
 
-const ServerCopyResult = ({ nidData, nidAddressData }) => {
-  const nidInformation = nidData?.data?.data;
-  const AddressData = nidAddressData?.data;
+const ServerCopyResult = ({ nidData }) => {
+  // const nidInformation = nidData?.data?.data || {};
+  // const AddressData = nidAddressData?.data;
+
+  const nidInformationStaticData = {
+    name: "সাজুদা বেগম",
+    nameEn: "Sajoda Begum",
+    spouse: "মোঃ আবুল হোসেন",
+    gender: "Female",
+    bloodGroup: "O+",
+    dateOfBirth: "1975-03-10",
+    father: "লুৎফর রহমান",
+    mother: "জিন্নতির নেছা",
+    pin: "123456",
+    nationalId: "9150012632",
+    religion: "Islam",
+    mobile: "017XXXXXXXX",
+    occupation: "Teacher",
+    photo:
+      "https://prportal.nidw.gov.bd/file-cb/b/d/f/77b5fd95-31c0-41e6-9b6e-3ea794d03833/Photo-77b5fd95-31c0-41e6-9b6e-3ea794d03833.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=fileobj%2F20240821%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240821T045157Z&X-Amz-Expires=120&X-Amz-SignedHeaders=host&X-Amz-Signature=269a6a16e8cec6b085ae67d48287e2d163567b39bb61ba545bdc6a1b28aaeb4f",
+    voter_no: "voter_no_dynamic",
+    sl_no: "sl_no_dynamic",
+    voterAreaCode: "dynamic",
+    permanentAddress: {
+      division: "Dhaka",
+      district: "Chandpur",
+      upozila: "Faridganj",
+      unionOrWard: "Paikpara Union",
+      postOffice: "Paikpara - 3651",
+      postalCode: "3651",
+      additionalMouzaOrMoholla: "Paikpara",
+      additionalVillageOrRoad: "Paikpara Road",
+      homeOrHoldingNo: "123/B",
+      region: "South",
+      fullAddress:
+        "বাসা/হোল্ডিং: ওলি ড্রাইভার বাড়ী, ডাকঘর: নবাবপুর-৩৯৩২, উপজেলা: সোনাগাজী, জেলা: ফেনী, বিভাগ: চট্টগ্রাম",
+    },
+    presentAddress: {
+      division: "Dhaka",
+      district: "Chandpur",
+      upozila: "Faridganj",
+      unionOrWard: "Paikpara Union",
+      postOffice: "Paikpara - 3651",
+      postalCode: "3651",
+      additionalMouzaOrMoholla: "Paikpara",
+      additionalVillageOrRoad: "Paikpara Road",
+      homeOrHoldingNo: "123/B",
+      region: "South",
+      fullAddress:
+        "বাসা/হোল্ডিং: ওলি ড্রাইভার বাড়ী, ডাকঘর: নবাবপুর-৩৯৩২, উপজেলা: সোনাগাজী, জেলা: ফেনী, বিভাগ: চট্টগ্রাম",
+    },
+  };
+
   const {
     name,
     nameEn,
@@ -28,6 +78,9 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
     mobile,
     occupation,
     photo,
+    voter_no,
+    sl_no,
+    voterAreaCode,
     permanentAddress: {
       division: permanentDivision,
       district: permanentDistrict,
@@ -39,7 +92,8 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
       additionalVillageOrRoad: permanentAdditionalVillageOrRoad,
       homeOrHoldingNo: permanentHomeOrHoldingNo,
       region: permanentRegion,
-    },
+      fullAddress: permanentFullAddress,
+    } = {}, // Add default empty object here
     presentAddress: {
       division: presentDivision,
       district: presentDistrict,
@@ -51,14 +105,15 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
       additionalVillageOrRoad: presentAdditionalVillageOrRoad,
       homeOrHoldingNo: presentHomeOrHoldingNo,
       region: presentRegion,
-    },
-  } = nidInformation;
+      fullAddress: presentFullAddress,
+    } = {}, // Add default empty object here
+  } = nidInformationStaticData;
 
   return (
-    <div className=" print:-mt-28 print:scale-95">
-      <button className="print:hidden" onClick={() => window.print()}>
+    <div className="print:-mt-20 print:scale-100">
+      {/* <button className="print:hidden" onClick={() => window.print()}>
         Print
-      </button>
+      </button> */}
 
       <div className="background">
         <div style={{ position: "relative" }}>
@@ -191,8 +246,9 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          69111564464646
+          {nationalId}
         </div>
+
         <div
           style={{
             position: "absolute",
@@ -202,20 +258,21 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          {pin}
+          পিন নম্বর
         </div>
+
         <div
           id="nid_father"
           style={{
             position: "absolute",
             left: "55%",
-            top: "32.7%",
+            top: "32.5%",
+            width: "auto",
             fontSize: "16px",
             color: "rgb(7, 7, 7)",
           }}
         >
-          {/* {nidData?.data?.data?.pin} */}
-          {father}
+          {pin}
         </div>
 
         <div
@@ -239,7 +296,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          123
+          {voter_no}
         </div>
         <div
           style={{
@@ -262,7 +319,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          1234
+          {sl_no}
         </div>
         <div
           style={{
@@ -285,7 +342,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          rangpur
+          {permanentDivision}
         </div>
         <div
           style={{
@@ -305,6 +362,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             top: "46%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
+            marginTop: "1px",
           }}
         >
           নাম (বাংলা)
@@ -436,13 +494,13 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "black",
           }}
         >
-          {spouse}
+          {spouse || ""}
         </div>
         <div
           style={{
             position: "absolute",
             left: "37%",
-            top: "62.2%",
+            top: "62.5%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -481,7 +539,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          পেশা
+          ধর্ম
         </div>
         <div
           id="mobile_no"
@@ -493,7 +551,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          {occupation}
+          {religion}
         </div>
         <div
           style={{
@@ -504,7 +562,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          রক্তের গ্রুপ
+          ভোটার এরিয়া কোড
         </div>
         <div
           id="blood_grp"
@@ -513,10 +571,10 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
             left: "55%",
             top: "70.5%",
             fontSize: "18px",
-            color: "red",
+            color: "rgb(7, 7, 7)",
           }}
         >
-          {bloodGroup}
+          {voterAreaCode}
         </div>
         <div
           style={{
@@ -546,7 +604,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "75.9%",
+            top: "76.3%",
             width: "auto",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
@@ -555,7 +613,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
           <b>বর্তমান ঠিকানা</b>
         </div>
 
-        <div
+        {/* <div
           id="present_addr"
           style={{
             position: "absolute",
@@ -569,13 +627,27 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
           গ্রাম/রাস্তা: {presentAdditionalVillageOrRoad}, উপজেলা:
           {presentUpozila}, পোস্ট কোড : {presentPostalCode}, জেলা:
           {presentDistrict} িবভাগ: {presentDivision}
+        </div> */}
+
+        <div
+          id="present_addr"
+          style={{
+            position: "absolute",
+            left: "37%",
+            top: "78.5%",
+            width: "48%",
+            fontSize: "16px",
+            color: "rgb(7, 7, 7)",
+          }}
+        >
+          {presentFullAddress}
         </div>
 
         <div
           style={{
             position: "absolute",
             left: "37%",
-            top: "84.7%",
+            top: "85.3%",
             width: "auto",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
@@ -589,17 +661,16 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "87%",
+            top: "87.4%",
             width: "48%",
             fontSize: "16px",
             color: "rgb(7, 7, 7)",
           }}
         >
-          {permanentAdditionalVillageOrRoad}, উপজেলা: {permanentUpozila}, জেলা:{" "}
-          {permanentDistrict}, িবভাগ: {permanentDivision}
+          {permanentFullAddress}
         </div>
 
-        <div
+        {/* <div
           style={{
             position: "absolute",
             top: "93.5%",
@@ -625,6 +696,33 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
         >
           উপরে প্রদর্শিত তথ্যসমূহ জাতীয় পরিচয়পত্র সংশ্লিষ্ট, ভোটার তালিকার সাথে
           সরাসরি সম্পর্কযুক্ত নয়।
+        </div> */}
+
+        <div
+          style={{
+            position: "absolute",
+            top: "93.5%",
+            width: "100%",
+            textAlign: "center",
+            fontSize: "14px",
+            color: "rgb(255, 0, 0)",
+          }}
+        >
+          উপরে প্রদর্শিত তথ্যসমূহ জাতীয় পরিচয়পত্র সংশ্লিষ্ট, ভোটার তালিকার সাথে
+          সরাসরি সম্পর্কযুক্ত নয়।
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            top: "95%",
+            width: "100%",
+            fontSize: "16px",
+            textAlign: "center",
+            color: "rgb(3, 3, 3)",
+          }}
+        >
+          This is Software Generated Report From Bangladesh Election Commission,
+          Signature & Seal Aren't Required.
         </div>
 
         <div
@@ -639,7 +737,7 @@ const ServerCopyResult = ({ nidData, nidAddressData }) => {
         >
           <img
             id="photo"
-            src={"/nid_img.jpg"}
+            src={photo}
             // height="140px"
             // width="1px"
             style={{ borderRadius: "10px", width: "125px", height: "140px" }}
