@@ -8,9 +8,12 @@
 // import QRCode from "qrcode";
 // import { useEffect } from 'react';
 
+import { useState } from "react";
 import "./ServerCopyResult.css";
+import ServerCopyQr from "./ServerCopyQr";
 
 const ServerCopyResult = ({ nidData }) => {
+  
   // const nidInformation = nidData?.data?.data || {};
   // const AddressData = nidAddressData?.data;
 
@@ -756,14 +759,7 @@ const ServerCopyResult = ({ nidData }) => {
             color: "rgb(3, 3, 3)",
           }}
         >
-          <img
-            // id="qr"
-            src={`/public/barcode.gif`}
-            style={{ height: "110px", width: "120px", marginLeft: "-10px" }}
-            // height="110px"
-            // width="110px"
-            alt="QR Code"
-          />
+          <ServerCopyQr nationalId={nationalId} pin={pin} name={name}/>
         </div>
 
         <div
