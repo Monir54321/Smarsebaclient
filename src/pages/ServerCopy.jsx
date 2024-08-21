@@ -1,4 +1,5 @@
 import { useState } from "react";
+import nidInformationStaticData from "../static/sampleServerCopyData";
 import useManageOrderData from "../utils/getManageOrder";
 import ServerCopyResult from "./ServerCopyResult";
 
@@ -9,6 +10,7 @@ const ServerCopy = () => {
   const [nidData, setNidData] = useState(null);
   const [nidAddressData, setNidAddressData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [tasmim,setTasmim] = useState(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,9 +52,17 @@ const ServerCopy = () => {
     }
   };
 
-  if (nidAddressData) {
+  // if (nidAddressData) {
+  //   return (
+  //     <ServerCopyResult nidData={nidData} nidAddressData={nidAddressData} />
+  //   ); //nidData={nidData}
+  // }
+  if (tasmim) {
     return (
-      <ServerCopyResult nidData={nidData} nidAddressData={nidAddressData} />
+      <ServerCopyResult
+        nidData={nidInformationStaticData}
+        // nidAddressData={nidAddressData}
+      />
     ); //nidData={nidData}
   }
 
