@@ -1,10 +1,10 @@
-import React, { useState } from "react";
 import QRCode from "qrcode";
+import React, { useState } from "react";
 
-const ServerCopyQr = ({ nationalId, pin, name }) => {
+const ServerCopyQr = ({ nationalId, dateOfBirth, name }) => {
   const [qrImage, setQrImage] = useState("");
   {
-    QRCode.toDataURL(`${name} ${pin} ${name}`)
+    QRCode.toDataURL(`${nationalId} ${dateOfBirth} ${name}`)
       .then((url) => {
         setQrImage(url);
       })
