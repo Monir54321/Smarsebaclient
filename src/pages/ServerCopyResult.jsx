@@ -227,7 +227,7 @@ const ServerCopyResult = ({ nidData }) => {
             style={{
               position: "absolute",
               left: "37%",
-              top: "29.8%",
+              top: "30.0%",
               fontSize: "18px",
               color: "rgb(7, 7, 7)",
             }}
@@ -253,7 +253,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "32.7%",
+            top: "32.8%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -266,7 +266,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "55%",
-            top: "32.5%",
+            top: "32.8%",
             width: "auto",
             fontSize: "16px",
             color: "rgb(7, 7, 7)",
@@ -302,7 +302,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "38%",
+            top: "38.1%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -314,7 +314,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "55%",
-            top: "38%",
+            top: "38.1%",
             fontSize: "16px",
             color: "rgb(7, 7, 7)",
           }}
@@ -325,7 +325,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "40.5%",
+            top: "40.7%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -337,7 +337,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "55%",
-            top: "40.5%",
+            top: "40.7%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -359,7 +359,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "46%",
+            top: "46.3%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
             marginTop: "1px",
@@ -373,7 +373,7 @@ const ServerCopyResult = ({ nidData }) => {
             position: "absolute",
             fontWeight: "bold",
             left: "55%",
-            top: "46%",
+            top: "46.3%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -384,7 +384,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "48.7%",
+            top: "48.9%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -397,7 +397,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "55%",
-            top: "48.5%",
+            top: "48.9%",
             fontSize: "16px",
             color: "rgb(7, 7, 7)",
           }}
@@ -408,7 +408,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "51.4%",
+            top: "51.6%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -420,7 +420,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "55%",
-            top: "51.2%",
+            top: "51.6%",
             fontSize: "16px",
             color: "rgb(7, 7, 7)",
           }}
@@ -431,7 +431,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "54.2%",
+            top: "54.3%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -443,7 +443,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "55%",
-            top: "53.8%",
+            top: "54.3%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -454,7 +454,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "56.7%",
+            top: "57.0%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -466,7 +466,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "55%",
-            top: "56.5%",
+            top: "57.0%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -489,7 +489,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "55%",
-            top: "59.5%",
+            top: "59.7%",
             fontSize: "18px",
             color: "black",
           }}
@@ -511,7 +511,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "65%",
+            top: "65.5%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -523,7 +523,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "55%",
-            top: "65%",
+            top: "65.4%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -534,7 +534,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "67.7%",
+            top: "68.2%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -546,7 +546,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "55%",
-            top: "67.7%",
+            top: "68.2%",
             fontSize: "16px",
             color: "rgb(7, 7, 7)",
           }}
@@ -557,7 +557,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "70.5%",
+            top: "70.9%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -569,7 +569,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "55%",
-            top: "70.5%",
+            top: "70.9%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -580,7 +580,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "37%",
-            top: "72.9%",
+            top: "73.5%",
             fontSize: "18px",
             color: "rgb(7, 7, 7)",
           }}
@@ -592,7 +592,7 @@ const ServerCopyResult = ({ nidData }) => {
           style={{
             position: "absolute",
             left: "55%",
-            top: "72.9%",
+            top: "73.5%",
             fontSize: "16px",
             color: "rgb(7, 7, 7)",
           }}
