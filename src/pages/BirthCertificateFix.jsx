@@ -173,6 +173,7 @@ const BirthCertificateFix = () => {
                   <td>SERVICE</td>
                   <td>NO</td>
                   <td>STATUS</td>
+                  <td>CANCELLATION REASON</td>
                   <td>DATE</td>
                   <td>DOWNLOAD</td>
                   <th></th>
@@ -226,6 +227,7 @@ const BirthCertificateFix = () => {
                         </button>
                       )}
                     </td>
+                    <td className="text-[15px]">REASON</td>
                   </tr>
                 ))}
               </tbody>
