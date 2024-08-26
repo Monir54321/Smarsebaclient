@@ -25,6 +25,8 @@ const NogodInfo = () => {
       });
   }, [user, reFetch]);
 
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const title = "নগদ ইনফো";
