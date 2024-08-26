@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../firebase/firebase.config";
-import Loading from "../components/Loading";
 import toast from "react-hot-toast";
 import { MdDelete, MdDownload } from "react-icons/md";
+import Loading from "../components/Loading";
+import auth from "../firebase/firebase.config";
 import useManageOrderData from "../utils/getManageOrder";
 
 const SaftyTika = () => {
@@ -50,7 +50,6 @@ const SaftyTika = () => {
         const price = pData?.data?.saftyTika;
 
         if (price) {
-          console.log(price);
           fetch(`http://localhost:5000/users/${user?.email}`)
             .then((res) => res.json())
             .then((data) => {
