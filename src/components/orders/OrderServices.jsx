@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+
 import ViewOrder from "../../pages/ViewOrder";
+import Swal from "sweetalert2";
 
 const OrderServices = ({ prop }) => {
   const [pendingOrders, setPendingOrders] = useState(null);
@@ -70,27 +71,76 @@ const OrderServices = ({ prop }) => {
   };
 
   const handleCancelOrder = (id) => {
-    // confirm admin is sure to cancel the order
-    const agreed = confirm("Do you want to cancel this order?");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to cancel this order?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, cancel it!",
+      cancelButtonText: "No, keep it",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Submit a reason for cancellation",
+          input: "text",
+          inputAttributes: {
+            autocapitalize: "off",
+          },
+          showCancelButton: true,
+          confirmButtonText: "Submit",
+          cancelButtonText: "Cancel",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          showLoaderOnConfirm: true,
+          preConfirm: (reason) => {
+            if (!reason) {
+              Swal.showValidationMessage("You need to write something!");
+            }
+            return reason;
+          },
+        }).then((inputResult) => {
+          if (inputResult.isConfirmed) {
+            const cancellationReason = inputResult.value;
+            console.log("Cancellation reason:", cancellationReason);
 
-    if (agreed) {
-      fetch(`http://localhost:5000/${prop}/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.status == "Success") {
-            setRefetch(true);
-            toast.success("Successfully canceled the order");
-            console.log(data);
+            fetch(`http://localhost:5000/${prop}/${id}`, {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                status: "Cancelled",
+                reason: cancellationReason,
+              }),
+            })
+              .then((res) => {
+                if (!res.ok) {
+                  throw new Error("Network response was not ok");
+                }
+                return res.json();
+              })
+              .then((data) => {
+                if (data.status === "Success") {
+                  setRefetch(true);
+                  toast.success("Successfully canceled the order");
+                  console.log("Server response:", data);
+                } else {
+                  toast.error("Failed to cancel the order");
+                  console.error("Error:", data);
+                }
+              })
+              .catch((error) => {
+                toast.error("An error occurred while canceling the order");
+                console.error("Error:", error);
+              });
           }
         });
-    } else {
-      toast.error("Order is not canceled");
-    }
+      } else {
+        toast.error("Order is not canceled");
+      }
+    });
   };
 
   const handleDeleteOrder = (id) => {

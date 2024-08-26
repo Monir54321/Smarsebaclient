@@ -146,6 +146,7 @@ const Biometric = () => {
                   <td>SERVICE</td>
                   <td>NO</td>
                   <td>STATUS</td>
+                  <td>CANCELLATION REASON</td>
                   <td>DATE</td>
                   <td>DOWNLOAD</td>
                   <th></th>
@@ -157,6 +158,7 @@ const Biometric = () => {
                     <td className="text-[15px]">{data?.title}</td>
                     <td className="text-[15px]">{data?.biometricNumber}</td>
                     <td className="text-[15px]">{data?.status}</td>
+                    <td className="text-[15px]">REASON</td>
                     <td className="text-[15px]">
                       {data?.createdAt?.split("T")[0]}
                     </td>

@@ -150,6 +150,7 @@ const BikashInfo = () => {
               <thead>
                 <tr>
                   <td>STATUS</td>
+                  <td>CANCELLATION REASON</td>
                   <td>NO</td>
                   <td>DATE</td>
                   <td>DOWNLOAD</td>
@@ -162,6 +163,7 @@ const BikashInfo = () => {
                     <td className="text-[15px]">{data?.title}</td>
                     <td className="text-[15px]">{data?.bikashNumber}</td>
                     <td className="text-[15px]">{data?.status}</td>
+                    <td className="text-[15px]">REASON</td>
                     <td className="text-[15px]">
                       {data?.createdAt?.split("T")[0]}
                     </td>
