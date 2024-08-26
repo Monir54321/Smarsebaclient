@@ -135,6 +135,7 @@ const NIDOrder = () => {
                 <tr>
                   <td>SERVICE</td>
                   <td>STATUS</td>
+                  <td>CANCELLATION REASON</td>
                   <td>DATE</td>
                   <td>DOWNLOAD</td>
                   <th></th>
@@ -145,6 +146,7 @@ const NIDOrder = () => {
                   <tr key={data._id}>
                     <td className="text-[15px]">{data?.number}</td>
                     <td className="text-[15px]">{data?.status}</td>
+                    <td className="text-[15px]">REASON</td>
                     <td className="text-[15px]">
                       {data?.createdAt?.split("T")[0]}
                     </td>
