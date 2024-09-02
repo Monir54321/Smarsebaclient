@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import auth from "../firebase/firebase.config";
-import nidInformationStaticData from "../static/sampleServerCopyData";
 import useManageOrderData from "../utils/getManageOrder";
 import useUserData from "../utils/getUserData";
 import ServerCopyResult from "./ServerCopyResult";
@@ -20,7 +19,7 @@ const ServerCopy = () => {
   const [nidData, setNidData] = useState(null);
   const [nidAddressData, setNidAddressData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [tasmim, setTasmim] = useState(false);
+  const [tasmim, setTasmim] = useState(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,12 +32,11 @@ const ServerCopy = () => {
       .then((res) => res.json())
       .then((pData) => {
         const price = parseFloat(pData?.data?.serverCopy);
-        console.log("server copy price from api: ", price);
+        console.log("server copy price",price)
         if (price) {
           fetch(`http://localhost:5000/users/${user?.email}`)
             .then((res) => res.json())
             .then((data) => {
-              console.log("user data from then fetch", data?.data?.price);
               if (parseFloat(data?.data?.amount) >= price) {
                 fetch("http://localhost:5000/serverCopys/", {
                   method: "POST",
@@ -71,50 +69,43 @@ const ServerCopy = () => {
         }
       });
 
-    // try {
-    //   const response = await fetch(
-    //     `http://localhost:5000/api/nid?nid=${nidNumber}&dob=${dateOfBirth}`,
-    //     {
-    //       method: "GET",
-    //       headers: {
-    //         Accept: "application/json",
-    //       },
-    //     }
-    //   );
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/nid?nid=${nidNumber}&dob=${dateOfBirth}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
 
-    //   const data = await response.json();
+      const data = await response.json();
+      console.log("fetch data of nid", data);
 
-    //   const result = await fetch(
-    //     `http://localhost:5000/api/nid2?nid=${nidNumber}&dob=${dateOfBirth}`,
-    //     {
-    //       method: "GET",
-    //       headers: {
-    //         Accept: "application/json",
-    //       },
-    //     }
-    //   );
-    //   const nidAddressData = await result.json();
+      const result = await fetch(
+        `http://localhost:5000/api/nid2?nid=${nidNumber}&dob=${dateOfBirth}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+      const nidAddressData = await result.json();
 
-    //   setNidData(data);
-    //   setNidAddressData(nidAddressData);
-    // } catch (error) {
-    //   console.error("Error fetching data:", error);
-    // } finally {
-    //   setLoading(false);
-    // }
+      setNidData(data);
+      setNidAddressData(nidAddressData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // if (nidAddressData) {
-  //   return (
-  //     <ServerCopyResult nidData={nidData} nidAddressData={nidAddressData} />
-  //   ); //nidData={nidData}
-  // }
-  if (tasmim) {
+  if (nidData) {
     return (
-      <ServerCopyResult
-        nidData={nidInformationStaticData}
-        // nidAddressData={nidAddressData}
-      />
+      <ServerCopyResult nidData={nidData} nidAddressData={nidAddressData} />
     ); //nidData={nidData}
   }
 

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../firebase/firebase.config";
-import Loading from "../components/Loading";
 import toast from "react-hot-toast";
-import { MdDelete, MdDownload } from "react-icons/md";
+import { MdOutlineFileCopy } from "react-icons/md";
+import Loading from "../components/Loading";
+import auth from "../firebase/firebase.config";
 import useManageOrderData from "../utils/getManageOrder";
 
 const Biometric = () => {
@@ -14,9 +14,7 @@ const Biometric = () => {
   const [reFetch, setReFetch] = useState(false);
   const [bioPrice, setBioPrice] = useState(null);
 
-  if (loading) {
-    return <Loading />;
-  }
+  const [selectedItem, setSelectedItem] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
@@ -82,32 +80,58 @@ const Biometric = () => {
         }
       });
   };
+
+  const handleCopy = (text) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        toast.success("Copied to clipboard!");
+      })
+      .catch((err) => {
+        toast.error("Failed to copy text.");
+        console.error("Error copying text: ", err);
+      });
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="w-full p-10 min-h-screen ">
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <h1 className="text-1xl md:text-3xl text-center">
           বায়োমেট্রিক অর্ডার করুন।
         </h1>
-        <h1 className=" md:text-xl text-center mt-5 ">
-          Banglalink বায়োমেট্রিক এর জন্য {bioPrice?.banglalinkBiometricOrder},
-          Grameen {bioPrice?.grameenBiometricOrder}, Robi{" "}
-          {bioPrice?.robiBiometricOrder}, Airtel{" "}
-          {bioPrice?.airtelBiometricOrder}, and Teletalk{" "}
-          {bioPrice?.teletalkBiometricOrder} টাকা কাটা হবে ।
-        </h1>
 
         <label className="form-control w-full ">
           <div className="label">
             <span className="label-text">Select Type:</span>
           </div>
-          <select name="selectType" className="select select-bordered ">
-            <option name="banglalink" defaultValue={true}>
-              Banglalink Biometric
+          <select
+            name="selectType"
+            className="select select-bordered "
+            value={selectedItem}
+            onChange={(e) => setSelectedItem(e.target.value)}
+          >
+            <option
+              name="banglalink"
+              value={bioPrice?.banglalinkBiometricOrder}
+              defaultValue={true}
+            >
+              Banglalink Biometric ({bioPrice?.banglalinkBiometricOrder})
             </option>
-            <option name="grameen">Grameen Biometric</option>
-            <option name="robi">Robi Biometric</option>
-            <option name="airtel">Airtel Biometric</option>
-            <option name="teletalk">Teletalk biometric</option>
+            <option name="grameen" value={bioPrice?.grameenBiometricOrder}>
+              Grameen Biometric ({bioPrice?.grameenBiometricOrder})
+            </option>
+            <option name="robi" value={bioPrice?.robiBiometricOrder}>
+              Robi Biometric ({bioPrice?.robiBiometricOrder})
+            </option>
+            <option name="airtel" value={bioPrice?.airtelBiometricOrder}>
+              Airtel Biometric ({bioPrice?.airtelBiometricOrder})
+            </option>
+            <option name="teletalk" value={bioPrice?.teletalkBiometricOrder}>
+              Teletalk biometric ( {bioPrice?.teletalkBiometricOrder})
+            </option>
           </select>
         </label>
 
@@ -122,6 +146,11 @@ const Biometric = () => {
             className="input input-bordered w-full"
           />
         </label>
+
+        <p className="text-2xl font-semibold text-red-600 mt-4">
+          {selectedItem &&
+            `আপনার অ্যাকাউন্ট থেকে ${selectedItem} টাকা কাটা হবে`}
+        </p>
 
         <button
           className="btn w-full mt-4 btn-primary text-white flex justify-center items-center"
@@ -143,61 +172,52 @@ const Biometric = () => {
             <table className="table table-xs table-pin-rows table-pin-cols">
               <thead>
                 <tr>
-                  <td>SERVICE</td>
                   <td>NO</td>
                   <td>STATUS</td>
-                  <td>CANCELLATION REASON</td>
+                  <td className="text-center">ACTION</td>
+                  {/* <td>COPY</td> */}
                   <td>DATE</td>
-                  <td>DOWNLOAD</td>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 {myOrders?.map((data) => (
                   <tr key={data._id}>
-                    <td className="text-[15px]">{data?.title}</td>
                     <td className="text-[15px]">{data?.biometricNumber}</td>
                     <td className="text-[15px]">{data?.status}</td>
-                    <td className="text-[15px]">REASON</td>
+                    <td className="text-[15px">
+                      <div className="flex gap-4 items-center w-full h-full">
+                        <div> {data?.reason || data?.pdf}</div>
+                        <div>
+                          {data?.status == "Success" && (
+                            <div className="flex justify-center items-center w-full h-full">
+                              <button onClick={() => handleCopy(data?.pdf)}>
+                                <MdOutlineFileCopy
+                                  className="w-5 h-5 font-semibold text-blue-600"
+                                  width={16}
+                                  height={16}
+                                />
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </td>
+                    {/* <td className="text-[15px] flex flex-row w-full">
+                      {data?.status == "Success" && (
+                        <div className="flex justify-center items-center w-full h-full">
+                          <button onClick={() => handleCopy(data?.pdf)}>
+                            <MdFileCopy
+                              className="w-5 h-5 font-semibold text-blue-600"
+                              width={16}
+                              height={16}
+                            />
+                          </button>
+                        </div>
+                      )}
+                    </td> */}
                     <td className="text-[15px]">
                       {data?.createdAt?.split("T")[0]}
-                    </td>
-                    <td className="text-[15px] flex flex-row w-full">
-                      {data?.status == "Processing" || "Pending" ? (
-                        <button
-                          onClick={() =>
-                            alert(
-                              "You can't delete until successfully delivering this service"
-                            )
-                          }
-                        >
-                          <MdDelete
-                            className="w-5 h-5 font-semibold text-blue-600"
-                            width={16}
-                            height={16}
-                          />
-                        </button>
-                      ) : (
-                        <button onClick={() => handleDeleteOrder(data?._id)}>
-                          <MdDelete
-                            className="w-5 h-5 font-semibold text-blue-600"
-                            width={16}
-                            height={16}
-                          />
-                        </button>
-                      )}
-
-                      {data?.title == "boi" ? (
-                        ""
-                      ) : (
-                        <button>
-                          <MdDownload
-                            className="w-5 h-5 font-semibold text-blue-600 ml-5"
-                            width={16}
-                            height={16}
-                          />
-                        </button>
-                      )}
                     </td>
                   </tr>
                 ))}

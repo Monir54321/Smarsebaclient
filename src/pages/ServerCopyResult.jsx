@@ -2,112 +2,149 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 
-// import React, { useRef, useState } from "react";
-// import serverCopyImage from "../assets/serverCopy.png";
-// import { useReactToPrint } from "react-to-print";
-// import QRCode from "qrcode";
-// import { useEffect } from 'react';
-
 import ServerCopyQr from "./ServerCopyQr";
 import "./ServerCopyResult.css";
 
 const ServerCopyResult = ({ nidData }) => {
-  // const nidInformation = nidData?.data?.data || {};
-  // const AddressData = nidAddressData?.data;
+  console.log("props nid data", nidData);
+  const nidInformation = nidData || {};
 
-  const nidInformationStaticData = {
-    name: "সাজুদা বেগম",
-    nameEn: "Sajoda Begum",
-    spouse: "মোঃ আবুল হোসেন",
-    gender: "Female",
-    bloodGroup: "O+",
-    dateOfBirth: "1975-03-10",
-    father: "লুৎফর রহমান",
-    mother: "জিন্নতির নেছা",
-    pin: "123456",
-    nationalId: "9150012632",
-    religion: "Islam",
-    mobile: "017XXXXXXXX",
-    occupation: "Teacher",
-    photo: "https://ibb.co/0BQNq3g",
-    voter_no: "voter_no_dynamic",
-    sl_no: "sl_no_dynamic",
-    voterAreaCode: "dynamic",
-    permanentAddress: {
-      division: "Dhaka",
-      district: "Chandpur",
-      upozila: "Faridganj",
-      unionOrWard: "Paikpara Union",
-      postOffice: "Paikpara - 3651",
-      postalCode: "3651",
-      additionalMouzaOrMoholla: "Paikpara",
-      additionalVillageOrRoad: "Paikpara Road",
-      homeOrHoldingNo: "123/B",
-      region: "South",
-      fullAddress:
-        "বাসা/হোল্ডিং: ওলি ড্রাইভার বাড়ী, ডাকঘর: নবাবপুর-৩৯৩২, উপজেলা: সোনাগাজী, জেলা: ফেনী, বিভাগ: চট্টগ্রাম",
-    },
-    presentAddress: {
-      division: "Dhaka",
-      district: "Chandpur",
-      upozila: "Faridganj",
-      unionOrWard: "Paikpara Union",
-      postOffice: "Paikpara - 3651",
-      postalCode: "3651",
-      additionalMouzaOrMoholla: "Paikpara",
-      additionalVillageOrRoad: "Paikpara Road",
-      homeOrHoldingNo: "123/B",
-      region: "South",
-      fullAddress:
-        "বাসা/হোল্ডিং: ওলি ড্রাইভার বাড়ী, ডাকঘর: নবাবপুর-৩৯৩২, উপজেলা: সোনাগাজী, জেলা: ফেনী, বিভাগ: চট্টগ্রাম",
-    },
-  };
+  // const nidInformationStaticData = {
+  //   nameBangla: "মোসাঃ রিনা আক্তার",
+  //   nameEnglish: "Mst Rina Akter",
+  //   dateOfBirth: "17 Sep 1979",
+  //   dateOfToday: "২৭/০৮/২০২৪",
+  //   nationalId: "1949417933",
+  //   pin: "19796710443835921",
+  //   voterNumber: "670517835921",
+  //   voterSlNo: 2632,
+  //   voterAreaCode: "670517",
+  //   gender: "female",
+  //   religion: "Islam",
+  //   bloodGroup: "",
+  //   fatherName: "আবদুস জলিল",
+  //   nidFather: "",
+  //   motherName: "মমিনা বেগম",
+  //   nidMother: "",
+  //   spouseName: "মোঃ জমির হোসেন",
+  //   presentHomeOrHoldingNo: "মাষ্টার বাড়ী",
+  //   presentAdditionalVillageOrRoad: "সোনাপুর",
+  //   presentMouzaOrMoholla: "কাঁচপুর",
+  //   presentAdditionalMouzaOrMoholla: "কাঁচপুর",
+  //   presentWardForUnionPorishod: 4,
+  //   presentPostalCode: "1430",
+  //   presentPostOffice: "কাঁচপুর",
+  //   presentUnionOrWard: "কাচঁপুর",
+  //   presentUpozila: "সোনারগাঁও",
+  //   presentCityCorporationOrMunicipality: "",
+  //   presentRmo: "1",
+  //   presentDistrict: "নারায়ণগঞ্জ",
+  //   presentDivision: "ঢাকা",
+  //   presentRegion: "ঢাকা",
+  //   permanentHomeOrHoldingNo: "নিজাই খামার বাড়ী",
+  //   permanentAdditionalVillageOrRoad: "নিজাই খামার",
+  //   permanentMouzaOrMoholla: "",
+  //   permanentAdditionalMouzaOrMoholla: "",
+  //   permanentWardForUnionPorishod: "",
+  //   permanentPostalCode: "",
+  //   permanentPostOffice: "বাকের হাট",
+  //   permanentUnionOrWard: "",
+  //   permanentUpozila: "উলিপুর",
+  //   permanentCityCorporationOrMunicipality: "",
+  //   permanentRmo: "1",
+  //   permanentDistrict: "কুড়িগ্রাম",
+  //   permanentDivision: "রংপুর",
+  //   permanentRegion: "রংপুর",
+  //   photo: "https://taka0nai.xyz/Profile_Pic/1949417933.png",
+  // };
 
   const {
-    name,
-    nameEn,
-    spouse,
+    nameBangla: name, // Renaming nameBangla to name
+    nameEnglish: nameEn, // Renaming nameEnglish to nameEn
+    spouseName: spouse, // Renaming spouseName to spouse
     gender,
     bloodGroup,
     dateOfBirth,
-    father,
-    mother,
+    fatherName: father, // Renaming fatherName to father
+    motherName: mother, // Renaming motherName to mother
     pin,
     nationalId,
     religion,
-    mobile,
-    occupation,
-    photo,
-    voter_no,
-    sl_no,
+    voterNumber: voter_no, // Renaming voterNumber to voter_no
+    voterSlNo: sl_no, // Renaming voterSlNo to sl_no
     voterAreaCode,
-    permanentAddress: {
-      division: permanentDivision,
-      district: permanentDistrict,
-      upozila: permanentUpozila,
-      unionOrWard: permanentUnionOrWard,
-      postOffice: permanentPostOffice,
-      postalCode: permanentPostalCode,
-      additionalMouzaOrMoholla: permanentAdditionalMouzaOrMoholla,
-      additionalVillageOrRoad: permanentAdditionalVillageOrRoad,
-      homeOrHoldingNo: permanentHomeOrHoldingNo,
-      region: permanentRegion,
-      fullAddress: permanentFullAddress,
-    } = {}, // Add default empty object here
-    presentAddress: {
-      division: presentDivision,
-      district: presentDistrict,
-      upozila: presentUpozila,
-      unionOrWard: presentUnionOrWard,
-      postOffice: presentPostOffice,
-      postalCode: presentPostalCode,
-      additionalMouzaOrMoholla: presentAdditionalMouzaOrMoholla,
-      additionalVillageOrRoad: presentAdditionalVillageOrRoad,
-      homeOrHoldingNo: presentHomeOrHoldingNo,
-      region: presentRegion,
-      fullAddress: presentFullAddress,
-    } = {}, // Add default empty object here
-  } = nidInformationStaticData;
+    photo,
+    permanentDivision: division, // Renaming permanentDivision to division
+    permanentDistrict: district, // Renaming permanentDistrict to district
+    permanentUpozila: upozila, // Renaming permanentUpozila to upozila
+    permanentUnionOrWard: unionOrWard, // Renaming permanentUnionOrWard to unionOrWard
+    permanentPostOffice: postOffice, // Renaming permanentPostOffice to postOffice
+    permanentPostalCode: postalCode, // Renaming permanentPostalCode to postalCode
+    permanentAdditionalMouzaOrMoholla: additionalMouzaOrMoholla, // Renaming permanentAdditionalMouzaOrMoholla to additionalMouzaOrMoholla
+    permanentAdditionalVillageOrRoad: additionalVillageOrRoad, // Renaming permanentAdditionalVillageOrRoad to additionalVillageOrRoad
+    permanentHomeOrHoldingNo: homeOrHoldingNo, // Renaming permanentHomeOrHoldingNo to homeOrHoldingNo
+    permanentRegion: region, // Renaming permanentRegion to region
+    presentDivision: presentDivision, // Mapping present address fields
+    presentDistrict: presentDistrict,
+    presentUpozila: presentUpozila,
+    presentUnionOrWard: presentUnionOrWard,
+    presentPostOffice: presentPostOffice,
+    presentPostalCode: presentPostalCode,
+    presentAdditionalMouzaOrMoholla: presentAdditionalMouzaOrMoholla,
+    presentAdditionalVillageOrRoad: presentAdditionalVillageOrRoad,
+    presentHomeOrHoldingNo: presentHomeOrHoldingNo,
+    presentRegion: presentRegion,
+  } = nidInformation;
+
+  // Now you can create the fullAddress fields if needed
+
+  const permanentFullAddress = `বাসা/হোল্ডিং: ${homeOrHoldingNo},ডাকঘর:${postOffice}-${postalCode},উপজেলা: ${upozila},জেলা: ${district},বিভাগ: ${division}`;
+
+  const presentFullAddress = `বাসা/হোল্ডিং: ${homeOrHoldingNo},ডাকঘর:${presentPostOffice}-${presentPostalCode},উপজেলা: ${presentUpozila},জেলা: ${presentDistrict},বিভাগ: ${presentDistrict}`;
+
+  // const extractedData = {
+  //   name,
+  //   nameEn,
+  //   spouse,
+  //   gender,
+  //   bloodGroup,
+  //   dateOfBirth,
+  //   father,
+  //   mother,
+  //   pin,
+  //   nationalId,
+  //   religion,
+  //   voter_no,
+  //   sl_no,
+  //   voterAreaCode,
+  //   permanentAddress: {
+  //     division,
+  //     district,
+  //     upozila,
+  //     unionOrWard,
+  //     postOffice,
+  //     postalCode,
+  //     additionalMouzaOrMoholla,
+  //     additionalVillageOrRoad,
+  //     homeOrHoldingNo,
+  //     region,
+  //     fullAddress: permanentFullAddress,
+  //   },
+  //   presentAddress: {
+  //     division: presentDivision,
+  //     district: presentDistrict,
+  //     upozila: presentUpozila,
+  //     unionOrWard: presentUnionOrWard,
+  //     postOffice: presentPostOffice,
+  //     postalCode: presentPostalCode,
+  //     additionalMouzaOrMoholla: presentAdditionalMouzaOrMoholla,
+  //     additionalVillageOrRoad: presentAdditionalVillageOrRoad,
+  //     homeOrHoldingNo: presentHomeOrHoldingNo,
+  //     region: presentRegion,
+  //     fullAddress: presentFullAddress,
+  //   },
+  //   photo,
+  // };
 
   return (
     <div className="print:-mt-20 print:scale-100">
@@ -342,7 +379,7 @@ const ServerCopyResult = ({ nidData }) => {
             color: "rgb(7, 7, 7)",
           }}
         >
-          {permanentDivision}
+          {presentDivision}
         </div>
         <div
           style={{
