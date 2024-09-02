@@ -46,7 +46,7 @@ const NIDMake = () => {
     motherName: "",
     birthLocation: "",
     dateOfBirth: "",
-    bloodGroup: "",
+    bloodGroup: null,
     location: "",
     email: user.email,
     applyDate: today,
@@ -116,7 +116,7 @@ const NIDMake = () => {
         ...prevState,
         nameBangla: responseData?.nameBen || prevState.nameBangla,
         birthLocation: responseData?.birth_place || prevState.birthLocation,
-        dateOfBirth: responseData?.birth || prevState.dateOfBirth,
+        dateOfBirth: responseData?.birth || prevState.dateOfBirth || null,
         bloodGroup: responseData?.blood || prevState.bloodGroup,
         location: responseData?.address || prevState.location,
         nameEnglish: responseData?.nameEng || prevState.nameEnglish,
@@ -186,14 +186,16 @@ const NIDMake = () => {
       });
   };
 
-  console.log("hit", isRedirect, validateInfo(info));
+  console.log("info", info);
 
-  if (isRedirect && validateInfo(info)) {
-    return <NationalIDCard info={info} />;
-  }
+  console.log("validate information", validateInfo(info));
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (isRedirect && validateInfo(info)) {
+    return <NationalIDCard info={info} />;
   }
 
   return (
