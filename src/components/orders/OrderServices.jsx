@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-import ViewOrder from "../../pages/ViewOrder";
 import Swal from "sweetalert2";
+import ViewOrder from "../../pages/ViewOrder";
 
 const OrderServices = ({ prop }) => {
   const [pendingOrders, setPendingOrders] = useState(null);
@@ -10,7 +11,6 @@ const OrderServices = ({ prop }) => {
   const [successOrders, setSuccessOrders] = useState(null);
   const [refetch, setRefetch] = useState(false);
 
-  console.log(prop);
 
   useEffect(() => {
     setPendingOrders(null);
@@ -36,9 +36,9 @@ const OrderServices = ({ prop }) => {
             setPendingOrders(pendingOrdersData);
             setProcessingOrders(processingOrdersData);
             setSuccessOrders(successOrdersData);
-            console.log(pendingOrdersData);
-            console.log(processingOrdersData);
-            console.log(successOrdersData);
+            console.log({ pendingOrdersData });
+            console.log({ processingOrdersData });
+            console.log({ successOrdersData });
             //console.log(data);
           }
         });
@@ -166,12 +166,12 @@ const OrderServices = ({ prop }) => {
     }
   };
 
-  const handleOrderSuccess = (e) => {
+  const handleOrderSuccess = (e, title, id) => {
     e.preventDefault();
 
-    const data = e?.target?.textData?.value;
-    const title = e?.target?.title?.value;
-    const id = e?.target?.id?.value;
+    const message = e?.target?.message?.value;
+
+    console.log({ message }, { title }, { id });
 
     if (title == "বায়োমেট্রিক") {
       fetch(`http://localhost:5000/biometricOrders/${id}`, {
@@ -179,10 +179,11 @@ const OrderServices = ({ prop }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ pdf: data, status: "Success" }),
+        body: JSON.stringify({ pdf: message, status: "Success" }),
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log("after success response",data)
           if (data.status == "Success") {
             setRefetch(true);
             toast.success("Successfully uploaded the order");
@@ -322,27 +323,22 @@ const OrderServices = ({ prop }) => {
                 >
                   View
                 </button>
-                {pData?.title == "বায়োমেট্রিক" || "বিকাশ ইনফো" || "নগদ ইনফো" ? (
-                  <form onSubmit={handleSubmitFile}>
-                    <label className="form-control w-full ">
-                      <div className="label">
-                        <span className="label-text">{pData.title}</span>
-                      </div>
-                      <input
-                        type="text"
-                        placeholder="title"
-                        name="title"
-                        defaultValue={pData?.title}
-                        className="input hidden input-bordered w-full"
-                      />
-                      <input
-                        type="text"
-                        placeholder="id"
-                        name="id"
-                        defaultValue={pData?._id}
-                        className="input hidden input-bordered w-full"
-                      />
 
+                <form onSubmit={(e) => handleOrderSuccess(e, pData.title, pData._id)}>
+                  <label className="form-control w-full ">
+                    <div className="label">
+                      <span className="label-text">{pData.title}</span>
+                    </div>
+
+                    {pData?.title ==
+                    ("বায়োমেট্রিক" || "বিকাশ ইনফো" || "নগদ ইনফো") ? (
+                      <input
+                        type="text"
+                        placeholder="Enter your message"
+                        name="message"
+                        className="file-input input-bordered w-full"
+                      />
+                    ) : (
                       <input
                         type="file"
                         onChange={(e) => setFiles(e.target.files[0])}
@@ -351,46 +347,14 @@ const OrderServices = ({ prop }) => {
                         accept="application/pdf"
                         className="file-input input-bordered w-full"
                       />
-                    </label>
+                    )}
+                  </label>
 
-                    <button className="btn w-full  mt-4 btn-primary text-white">
-                      Submit
-                    </button>
-                  </form>
-                ) : (
-                  <div>
-                    <form onSubmit={handleOrderSuccess}>
-                      <label className="form-control w-full ">
-                        <div className="label">
-                          <span className="label-text">{pData.title}</span>
-                        </div>
-                        <input
-                          type="text"
-                          placeholder={pData?.title}
-                          name="textData"
-                          className="input input-bordered w-full"
-                        />
-                      </label>
-                      <input
-                        type="text"
-                        placeholder={pData?.title}
-                        defaultValue={pData?.title}
-                        name="title"
-                        className="input input-bordered w-full hidden"
-                      />
-                      <input
-                        type="text"
-                        defaultValue={pData?._id}
-                        name="id"
-                        className="input input-bordered w-full hidden"
-                      />
+                  <button className="btn w-full  mt-4 btn-primary text-white">
+                    Submit
+                  </button>
+                </form>
 
-                      <button className="btn w-full  mt-4 btn-primary text-white">
-                        Submit
-                      </button>
-                    </form>
-                  </div>
-                )}
                 <div className="card-actions w-full">
                   <button
                     onClick={() => handleCancelOrder(pData._id)}

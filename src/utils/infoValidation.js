@@ -7,7 +7,6 @@ const validateInfo = (info) => {
     info.fatherNameBangla &&
     info.motherName &&
     info.birthLocation &&
-    info.dateOfBirth &&
     info.location &&
     info.nidImg &&
     info.signatureImg

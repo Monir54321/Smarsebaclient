@@ -12,9 +12,7 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 import { FaFilePen, FaMapLocation } from "react-icons/fa6";
-import { GiSyringe } from "react-icons/gi";
 import { IoMdCard } from "react-icons/io";
-import { MdLockReset } from "react-icons/md";
 import { PiFilesFill } from "react-icons/pi";
 import { Link, Outlet } from "react-router-dom";
 import bikashIcon from "../assets/bikash_icon.png";
@@ -100,7 +98,7 @@ const DashboardLayout = () => {
             <li className="mt-2 text-[15px] font-sans text-gray-500">
               <Link to={"/dashboard/nidMake"} onClick={handleLinkClick}>
                 <FaAddressCard width={16} height={16} />
-                এনআইডি মেক
+                সাইন কপি টু এনআইডি
               </Link>
             </li>
             <li className="mt-2 text-[15px] font-sans text-gray-500">
@@ -121,7 +119,7 @@ const DashboardLayout = () => {
                 onClick={handleLinkClick}
               >
                 <FaRegAddressCard width={16} height={16} />
-                সার্ভার কপি to এনআইডি মেক
+                অটো এনআইডি
               </Link>
             </li>
             <li className="mt-2 text-[15px] font-sans text-gray-500">
@@ -148,13 +146,13 @@ const DashboardLayout = () => {
                 কল লিস্ট অল সিম
               </Link>
             </li>
-            <li className="mt-2 text-[15px] font-sans text-gray-500">
+            {/* <li className="mt-2 text-[15px] font-sans text-gray-500">
               <Link to={"/dashboard/saftytika"} onClick={handleLinkClick}>
                 <GiSyringe width={16} height={16} />
                 সুরক্ষা টিকা
               </Link>
-            </li>
-            <li className="mt-2 text-[15px] font-sans text-gray-500">
+            </li> */}
+            {/* <li className="mt-2 text-[15px] font-sans text-gray-500">
               <Link
                 to={"/dashboard/birthcertificateonline"}
                 onClick={handleLinkClick}
@@ -162,8 +160,8 @@ const DashboardLayout = () => {
                 <FaAddressCard width={16} height={16} />
                 জন্ম নিবন্ধন (Online)
               </Link>
-            </li>
-            <li className="mt-2 text-[15px] font-sans text-gray-500">
+            </li> */}
+            {/* <li className="mt-2 text-[15px] font-sans text-gray-500">
               <Link
                 to={"/dashboard/birthcertificateFix"}
                 onClick={handleLinkClick}
@@ -171,7 +169,7 @@ const DashboardLayout = () => {
                 <FaUserEdit width={16} height={16} />
                 নিবন্ধন নাম কারেকশন
               </Link>
-            </li>
+            </li> */}
             <li className="mt-2 text-[15px] font-sans text-gray-500">
               <Link to={"/dashboard/bikashinfo"} onClick={handleLinkClick}>
                 <img src={bikashIcon} className="w-5 h-5" />
@@ -184,12 +182,12 @@ const DashboardLayout = () => {
                 নগদ ইনফো
               </Link>
             </li>
-            <li className="mt-2 text-[15px] font-sans text-gray-500">
+            {/* <li className="mt-2 text-[15px] font-sans text-gray-500">
               <Link to={"/dashboard/bikashpinreset"} onClick={handleLinkClick}>
                 <MdLockReset width={16} height={16} />
                 বিকাশ পিন রিসেট
               </Link>
-            </li>
+            </li> */}
             <li className="mt-2 text-[15px] font-sans text-gray-500">
               <Link to={"/dashboard/nameaddress"} onClick={handleLinkClick}>
                 <FaSearchengin width={16} height={16} />
