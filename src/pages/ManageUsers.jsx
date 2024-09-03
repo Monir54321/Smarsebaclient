@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
-import ManageOrderButton from "./ManageOrderButton";
 
 const ManageUsers = () => {
   const [usersData, setUsersData] = useState(null);
@@ -155,8 +154,6 @@ const ManageUsers = () => {
           </tbody>
         </table>
       </div>
-
-      <ManageOrderButton />
     </div>
   );
 };

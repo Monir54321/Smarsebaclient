@@ -13,9 +13,9 @@ import NationalIDCard from "./NationalIDCard";
 
 const NIDMake = () => {
   const { data } = useManageOrderData();
-  const [isRedirect, setIsRedirect] = useState(false);
+  const statusData = data?.find((item) => item.title === "সাইন কপি টু এনআইডি");
 
-  const statusData = data?.find((item) => item.title === "এনআইডি কার্ড");
+  const [isRedirect, setIsRedirect] = useState(false);
 
   const [user, loading] = useAuthState(auth);
   const [imageLoading, setImageLoading] = useState(false);

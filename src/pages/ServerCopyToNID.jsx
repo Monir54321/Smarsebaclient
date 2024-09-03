@@ -5,6 +5,7 @@ import SyncLoader from "react-spinners/SyncLoader";
 import auth from "../firebase/firebase.config";
 import getBanglaDate from "../utils/bangladate";
 import checkAndConvertPostalCode from "../utils/convertIntoBanglaDigit";
+import useManageOrderData from "../utils/getManageOrder";
 import validateInfo from "../utils/infoValidation";
 import { uploadFile } from "../utils/uploadFileFromFrontend";
 import NationalIDCard from "./NationalIDCard";
@@ -15,6 +16,9 @@ const ServerCopyToNID = () => {
   const [signatureImg, setSignatureImg] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
+
+  const { data } = useManageOrderData();
+  const statusData = data?.find((item) => item.title === "অটো এনআইডি");
 
   const today = getBanglaDate();
 
@@ -228,8 +232,17 @@ const ServerCopyToNID = () => {
           )}
         </label>
 
-        <button className="btn w-full  mt-4 btn-primary text-white">
-          Submit
+        <button
+          disabled={loading || statusData?.status === "inactive"}
+          className="btn w-full  mt-4 btn-primary text-white"
+        >
+          {loading ? (
+            <>
+              <span className="loading loading-spinner text-white bg-primary"></span>
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
     </div>
