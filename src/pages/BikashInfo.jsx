@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../firebase/firebase.config";
-import Loading from "../components/Loading";
 import toast from "react-hot-toast";
 import { MdDelete, MdDownload } from "react-icons/md";
+import Loading from "../components/Loading";
+import auth from "../firebase/firebase.config";
 import useManageOrderData from "../utils/getManageOrder";
 
 const BikashInfo = () => {
@@ -13,9 +13,18 @@ const BikashInfo = () => {
   const [myOrders, setMyOrders] = useState(null);
   const [reFetch, setReFetch] = useState(false);
 
-  if (loading) {
-    return <Loading />;
-  }
+
+  const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+      .then((response) => response.json())
+      .then((pData) => {
+        setPrice(parseFloat(pData?.data?.bikashInfo));
+      });
+  }, []);
+
+ 
 
   useEffect(() => {
     fetch(`http://localhost:5000/bikashInfoOrders/user/${user?.email}`)
@@ -28,6 +37,11 @@ const BikashInfo = () => {
         }
       });
   }, [user, reFetch]);
+
+
+  if (loading) {
+    return <Loading />;
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,13 +58,7 @@ const BikashInfo = () => {
     };
 
     try {
-      const token = await user.getIdToken(); // Get Firebase Auth token
-
-      const pData = await fetch(
-        "http://localhost:5000/priceList/668f76383906559fe7ff631c"
-      ).then((res) => res.json());
-      const price = pData?.data?.bikashInfo;
-
+      const token = await user.getIdToken(); 
       if (price) {
         const userData = await fetch(
           `http://localhost:5000/users/${user.email}`,
@@ -99,7 +107,7 @@ const BikashInfo = () => {
           বিকাশ ইনফো অর্ডার করুন
         </h1>
         <h1 className=" md:text-xl text-center mt-5 ">
-          বিকাশ ইনফোর জন্য 700 টাকা কাটা হবে।
+          বিকাশ ইনফোর জন্য {price} টাকা কাটা হবে।
         </h1>
 
         <label className="form-control w-full ">

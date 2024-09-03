@@ -5,6 +5,9 @@ const PriceList = () => {
   const [title, setTitle] = useState("");
   const [priceListData, setPriceListData] = useState({});
   const [selectedPrice, setSelectedPrice] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  console.log("price list data: ", priceListData);
 
   useEffect(() => {
     fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
@@ -15,38 +18,58 @@ const PriceList = () => {
   }, []);
 
   useEffect(() => {
-    setSelectedPrice(priceListData[title]);
+    if (title && priceListData && priceListData[title] !== undefined) {
+      setSelectedPrice(priceListData[title]);
+    } else {
+      setSelectedPrice(0); // or set to some default value
+    }
   }, [title, priceListData]);
+
+  const handlePriceChange = (e) => {
+    setSelectedPrice(e.target.value);
+  };
 
   const handleUpdatePrice = (e) => {
     e.preventDefault();
-    const nidAmount = e?.target?.nidAmount?.value;
-    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title, nidAmount }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.status === "Success") {
-          toast.success(data?.message);
-        }
-      });
+    setLoading(true);
+
+    try {
+      fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, nidAmount: selectedPrice }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.data?.modifiedCount === 1) {
+            toast.success(data?.message);
+            setSelectedPrice(0);
+            setTitle("");
+            setLoading(false);
+          }
+        });
+    } catch (error) {
+      toast.error("An error occurred while updating the price.");
+      console.log("price update error: ", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="p-4">
-      <label className="form-control w-full ">
+      <label className="form-control w-full">
         <div className="label">
           <span className="label-text">Select One</span>
         </div>
         <select
           onChange={(e) => setTitle(e.target.value)}
-          className="select select-bordered "
+          className="select select-bordered"
           name="priceTile"
           id="priceTile"
+          value={title}
         >
           {Object.keys(priceListData)
             .filter(
@@ -67,7 +90,7 @@ const PriceList = () => {
       >
         <label className="form-control w-full">
           <div className="label">
-            <span className="label-text">এনআইডি কার্ড Price</span>
+            <span className="label-text">Price</span>
           </div>
           <input
             type="number"
@@ -75,11 +98,18 @@ const PriceList = () => {
             placeholder="amount"
             name="nidAmount"
             className="input input-bordered w-full"
-            defaultValue={selectedPrice}
+            value={selectedPrice}
+            onChange={handlePriceChange}
           />
         </label>
         <button type="submit" className="btn btn-primary">
-          Submit
+          {loading ? (
+            <>
+              <span className="loading loading-spinner text-white bg-primary"></span>
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
     </div>
