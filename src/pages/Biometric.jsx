@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { MdOutlineFileCopy } from "react-icons/md";
@@ -9,7 +9,7 @@ import useManageOrderData from "../utils/getManageOrder";
 const Biometric = () => {
   const { data } = useManageOrderData();
   const statusData = data?.find((item) => item.title === "Biometric");
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [myOrders, setMyOrders] = useState(null);
   const [reFetch, setReFetch] = useState(false);
   const [bioPrice, setBioPrice] = useState(null);
@@ -21,7 +21,6 @@ const Biometric = () => {
       .then((res) => res.json())
       .then((data) => {
         setBioPrice(data?.data);
-        console.log(data.data);
       });
   }, []);
 
@@ -32,7 +31,6 @@ const Biometric = () => {
         if (data.status == "Success") {
           setReFetch(false);
           setMyOrders(data?.data);
-          console.log(data);
         }
       });
   }, [user, reFetch]);

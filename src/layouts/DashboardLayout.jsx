@@ -154,6 +154,12 @@ const DashboardLayout = () => {
               </Link>
             </li>
             <li className="mt-2 text-[15px] font-sans text-gray-500">
+              <Link to={"/dashboard/servercopy"} onClick={handleLinkClick}>
+                <FaRegAddressCard width={16} height={16} />
+                সার্ভার কপি channel 2
+              </Link>
+            </li>
+            <li className="mt-2 text-[15px] font-sans text-gray-500">
               <Link to={"/dashboard/calllistsim"} onClick={handleLinkClick}>
                 <FaPhoneAlt width={16} height={16} />
                 কল লিস্ট অল সিম

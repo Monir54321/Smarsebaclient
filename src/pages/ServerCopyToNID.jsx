@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import SyncLoader from "react-spinners/SyncLoader";
@@ -19,6 +19,16 @@ const ServerCopyToNID = () => {
 
   const { data } = useManageOrderData();
   const statusData = data?.find((item) => item.title === "অটো এনআইডি");
+
+  const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+      .then((response) => response.json())
+      .then((pData) => {
+        setPrice(parseFloat(pData?.data?.autoNid));
+      });
+  }, []);
 
   const today = getBanglaDate();
 
@@ -64,14 +74,14 @@ const ServerCopyToNID = () => {
     fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
       .then((res) => res.json())
       .then((pData) => {
-        const price = parseFloat(pData?.data?.autoNid);
+        const price = pData?.data?.autoNid;
         console.log("auto nid card price: ", price);
         if (price) {
           fetch(`http://localhost:5000/users/${user?.email}`)
             .then((res) => res.json())
             .then((data) => {
-              if (parseFloat(data?.data?.amount) >= price) {
-                fetch("http://localhost:5000/serverCopys/", {
+              if (data?.data?.amount >= price) {
+                fetch("http://localhost:5000/autoNid", {
                   method: "POST",
                   headers: {
                     Accept: "application/json",
@@ -112,9 +122,7 @@ const ServerCopyToNID = () => {
           },
         }
       );
-
       const data = await response.json();
-
       setInfo((preState) => ({
         ...preState,
         signatureImg: signatureImg,
@@ -142,7 +150,6 @@ const ServerCopyToNID = () => {
             : ""
         } ${data?.presentDistrict}`,
       }));
-
       setIsRedirect(true);
       setLoading(false);
     } catch (error) {
@@ -167,7 +174,7 @@ const ServerCopyToNID = () => {
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <h1 className="text-1xl md:text-3xl text-center">Auto NID Make</h1>
         <h1 className=" md:text-xl text-center mt-5 ">
-          আপনার একাউন্ট থেকে 10 টাকা কাটা হবে।
+          আপনার একাউন্ট থেকে {price} টাকা কাটা হবে।
         </h1>
 
         <label className="form-control w-full ">
@@ -206,7 +213,7 @@ const ServerCopyToNID = () => {
               <SyncLoader color="#123abc" loading={true} />
             </div>
           ) : (
-            <div>
+            <div className="flex">
               <input
                 type="file"
                 onChange={(e) => handleFileChange(e, "signature")}
