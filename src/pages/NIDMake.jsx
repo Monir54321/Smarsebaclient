@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
+import { PropagateLoader } from "react-spinners";
 import writeImage from "../assets/Mack.png";
 import Loading from "../components/Loading";
 import auth from "../firebase/firebase.config";
@@ -13,9 +14,11 @@ import NationalIDCard from "./NationalIDCard";
 
 const NIDMake = () => {
   const { data } = useManageOrderData();
+  const statusData = data?.find((item) => item.title === "সাইন কপি টু এনআইডি");
+
   const [isRedirect, setIsRedirect] = useState(false);
 
-  const statusData = data?.find((item) => item.title === "এনআইডি কার্ড");
+  const [pdfUploadLoading, setPdfUploadLoading] = useState(false);
 
   const [user, loading] = useAuthState(auth);
   const [imageLoading, setImageLoading] = useState(false);
@@ -33,6 +36,16 @@ const NIDMake = () => {
   });
 
   const today = getBanglaDate();
+
+  const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+      .then((response) => response.json())
+      .then((pData) => {
+        setPrice(parseFloat(pData?.data?.nidMake));
+      });
+  }, []);
 
   const [info, setInfo] = useState({
     title: "এনআইডি কার্ড",
@@ -78,6 +91,7 @@ const NIDMake = () => {
 
   const handleSignCopyUpload = async (e) => {
     e.preventDefault();
+    setPdfUploadLoading(true);
     const file = e.target.files[0];
     if (!file) {
       setError("Please select a file.");
@@ -99,6 +113,7 @@ const NIDMake = () => {
       );
 
       setResponseData(response.data);
+      setPdfUploadLoading(false);
     } catch (error) {
       setError("Error uploading file.");
       console.error("Error uploading file:", error);
@@ -153,42 +168,49 @@ const NIDMake = () => {
     };
 
     // Fetch user data to check amount
-    fetch(`http://localhost:5000/users/${user.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.data?.amount >= 5) {
-          // If amount is sufficient, submit the form data
-          fetch("http://localhost:5000/nidMakes/", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ ...info, ...formData }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.status === "Success") {
-                // toast.success(data.message);
+    try {
+      fetch(`http://localhost:5000/users/${user.email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.data?.amount >= 5) {
+            // If amount is sufficient, submit the form data
+            fetch("http://localhost:5000/nidMakes/", {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                ...info,
+                ...formData,
+                email: user?.email,
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.status === "Success") {
+                  // toast.success(data.message);
 
-                setInfo((prevState) => ({
-                  ...prevState,
-                  ...formData,
-                }));
-                setIsRedirect(true);
-              } else {
-                toast.error(data.message);
-              }
-            });
-        } else {
-          toast.error(data.message);
-        }
-      });
+                  setInfo((prevState) => ({
+                    ...prevState,
+                    ...formData,
+                  }));
+                  setIsRedirect(true);
+                  setIsLoading(false);
+                } else {
+                  toast.error(data.message);
+                }
+              });
+          } else {
+            toast.error(data.message);
+          }
+        });
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
-
-  console.log("info", info);
-
-  console.log("validate information", validateInfo(info));
 
   if (loading) {
     return <Loading />;
@@ -218,6 +240,14 @@ const NIDMake = () => {
               name="nidImage"
               id="nidImage"
             ></input>
+            {pdfUploadLoading && (
+              <div className="w-full h-full flex flex-col justify-center items-center gap-2 my-1">
+                <h1 className="text-base font-semibold text-orange-700">
+                  Sign Copy Uploading....
+                </h1>
+                <PropagateLoader />
+              </div>
+            )}
             <div className="label ">
               <span className="label-text text-sm text-center block w-full pb-2 px-1">
                 সাইন কপি আপলোড করুন
@@ -447,9 +477,9 @@ const NIDMake = () => {
         </label>
         <button
           className="btn w-full mt-4 btn-primary text-white flex justify-center items-center"
-          disabled={loading || statusData?.status === "inactive"}
+          disabled={loading || isLoading || statusData?.status === "inactive"}
         >
-          {loading ? (
+          {loading || isLoading ? (
             <>
               <span className="loading loading-spinner text-white bg-primary"></span>
             </>

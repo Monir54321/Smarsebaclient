@@ -2,61 +2,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 
-import ServerCopyQr from "./ServerCopyQr";
+import QRCode from "qrcode";
+import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import toast from "react-hot-toast";
+import auth from "../firebase/firebase.config";
 import "./ServerCopyResult.css";
 
 const ServerCopyResult = ({ nidData }) => {
-  console.log("props nid data", nidData);
   const nidInformation = nidData || {};
-
-  // const nidInformationStaticData = {
-  //   nameBangla: "মোসাঃ রিনা আক্তার",
-  //   nameEnglish: "Mst Rina Akter",
-  //   dateOfBirth: "17 Sep 1979",
-  //   dateOfToday: "২৭/০৮/২০২৪",
-  //   nationalId: "1949417933",
-  //   pin: "19796710443835921",
-  //   voterNumber: "670517835921",
-  //   voterSlNo: 2632,
-  //   voterAreaCode: "670517",
-  //   gender: "female",
-  //   religion: "Islam",
-  //   bloodGroup: "",
-  //   fatherName: "আবদুস জলিল",
-  //   nidFather: "",
-  //   motherName: "মমিনা বেগম",
-  //   nidMother: "",
-  //   spouseName: "মোঃ জমির হোসেন",
-  //   presentHomeOrHoldingNo: "মাষ্টার বাড়ী",
-  //   presentAdditionalVillageOrRoad: "সোনাপুর",
-  //   presentMouzaOrMoholla: "কাঁচপুর",
-  //   presentAdditionalMouzaOrMoholla: "কাঁচপুর",
-  //   presentWardForUnionPorishod: 4,
-  //   presentPostalCode: "1430",
-  //   presentPostOffice: "কাঁচপুর",
-  //   presentUnionOrWard: "কাচঁপুর",
-  //   presentUpozila: "সোনারগাঁও",
-  //   presentCityCorporationOrMunicipality: "",
-  //   presentRmo: "1",
-  //   presentDistrict: "নারায়ণগঞ্জ",
-  //   presentDivision: "ঢাকা",
-  //   presentRegion: "ঢাকা",
-  //   permanentHomeOrHoldingNo: "নিজাই খামার বাড়ী",
-  //   permanentAdditionalVillageOrRoad: "নিজাই খামার",
-  //   permanentMouzaOrMoholla: "",
-  //   permanentAdditionalMouzaOrMoholla: "",
-  //   permanentWardForUnionPorishod: "",
-  //   permanentPostalCode: "",
-  //   permanentPostOffice: "বাকের হাট",
-  //   permanentUnionOrWard: "",
-  //   permanentUpozila: "উলিপুর",
-  //   permanentCityCorporationOrMunicipality: "",
-  //   permanentRmo: "1",
-  //   permanentDistrict: "কুড়িগ্রাম",
-  //   permanentDivision: "রংপুর",
-  //   permanentRegion: "রংপুর",
-  //   photo: "https://taka0nai.xyz/Profile_Pic/1949417933.png",
-  // };
 
   const {
     nameBangla: name, // Renaming nameBangla to name
@@ -102,56 +56,87 @@ const ServerCopyResult = ({ nidData }) => {
 
   const presentFullAddress = `বাসা/হোল্ডিং: ${homeOrHoldingNo},ডাকঘর:${presentPostOffice}-${presentPostalCode},উপজেলা: ${presentUpozila},জেলা: ${presentDistrict},বিভাগ: ${presentDistrict}`;
 
-  // const extractedData = {
-  //   name,
-  //   nameEn,
-  //   spouse,
-  //   gender,
-  //   bloodGroup,
-  //   dateOfBirth,
-  //   father,
-  //   mother,
-  //   pin,
-  //   nationalId,
-  //   religion,
-  //   voter_no,
-  //   sl_no,
-  //   voterAreaCode,
-  //   permanentAddress: {
-  //     division,
-  //     district,
-  //     upozila,
-  //     unionOrWard,
-  //     postOffice,
-  //     postalCode,
-  //     additionalMouzaOrMoholla,
-  //     additionalVillageOrRoad,
-  //     homeOrHoldingNo,
-  //     region,
-  //     fullAddress: permanentFullAddress,
-  //   },
-  //   presentAddress: {
-  //     division: presentDivision,
-  //     district: presentDistrict,
-  //     upozila: presentUpozila,
-  //     unionOrWard: presentUnionOrWard,
-  //     postOffice: presentPostOffice,
-  //     postalCode: presentPostalCode,
-  //     additionalMouzaOrMoholla: presentAdditionalMouzaOrMoholla,
-  //     additionalVillageOrRoad: presentAdditionalVillageOrRoad,
-  //     homeOrHoldingNo: presentHomeOrHoldingNo,
-  //     region: presentRegion,
-  //     fullAddress: presentFullAddress,
-  //   },
-  //   photo,
-  // };
+  const [user] = useAuthState(auth);
+
+  const [price, setPrice] = useState(0);
+
+  const [qrImage, setQrImage] = useState("");
+
+  useEffect(() => {
+    const generateQRCode = () => {
+      QRCode.toDataURL(`${nationalId} ${dateOfBirth} ${nameEn}`)
+        .then((url) => {
+          setQrImage(url);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    };
+
+    generateQRCode(); // Call the QR code generation function
+  }, [nationalId, dateOfBirth, nameEn]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+      .then((response) => response.json())
+      .then((pData) => {
+        setPrice(parseFloat(pData?.data?.serverCopy));
+      });
+  }, []);
+
+  useEffect(() => {
+    const checkAndSubmitData = async () => {
+      try {
+        if (price && nidData) {
+          const userResponse = await fetch(
+            `http://localhost:5000/users/${user?.email}`
+          );
+          const userData = await userResponse.json();
+
+          if (userData?.data?.amount < price) {
+            return toast.error("You don't have enough money to purchase");
+          } else if (userData?.data?.amount >= price) {
+            const serverCopyResponse = await fetch(
+              "http://localhost:5000/serverCopys/",
+              {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  title: "সার্ভার কপি",
+                  email: user?.email,
+                }),
+              }
+            );
+
+            const serverCopyData = await serverCopyResponse.json();
+
+            if (serverCopyData.status === "Success") {
+              toast.success(serverCopyData.message);
+            } else {
+              toast.error(serverCopyData.message);
+            }
+          }
+        }
+      } catch (error) {
+        toast.error("An error occurred. Please try again.");
+        console.error("Error:", error);
+      }
+    };
+
+    checkAndSubmitData(); // Call the function within the useEffect
+  }, [price, nidData, user?.email]); // Add relevant dependencies
+
+  useEffect(() => {
+    if (nidData && qrImage) {
+      window.print();
+    }
+  }, [nidData, qrImage]);
 
   return (
     <div className="print:-mt-20 print:scale-100">
-      {/* <button className="print:hidden" onClick={() => window.print()}>
-        Print
-      </button> */}
-
       <div className="background">
         <div style={{ position: "relative" }}>
           <img
@@ -765,10 +750,10 @@ const ServerCopyResult = ({ nidData }) => {
             color: "rgb(3, 3, 3)",
           }}
         >
-          <ServerCopyQr
-            nationalId={nationalId}
-            dateOfBirth={dateOfBirth}
-            name={nameEn}
+          <img
+            src={qrImage}
+            style={{ height: "135px", width: "170px", marginLeft: "-25px" }}
+            alt="QR Code"
           />
         </div>
 

@@ -14,21 +14,9 @@ const ServerCopyQr = ({ nationalId, dateOfBirth, name }) => {
   }
   return (
     <>
-      {/* <img
-        // id="qr"
-        src={`/public/barcode.gif`}
-        style={{ height: "110px", width: "120px", marginLeft: "-10px" }}
-        // height="110px"
-        // width="110px"
-        alt="QR Code"
-      /> */}
       <img
-        // id="qr"
         src={qrImage}
-        // style={{ height: "150px", width: "190px", marginLeft: "-30px" }}
         style={{ height: "135px", width: "170px", marginLeft: "-25px" }}
-        // height="110px"
-        // width="110px"
         alt="QR Code"
       />
     </>

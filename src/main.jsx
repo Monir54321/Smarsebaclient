@@ -16,6 +16,7 @@ import CallListAllSim from "./pages/CallListAllSim.jsx";
 import FileList from "./pages/FileList.jsx";
 import LocationTrack from "./pages/LocationTrack.jsx";
 import LogIn from "./pages/Login.jsx";
+import ManageOrderButton from "./pages/ManageOrderButton.jsx";
 import ManageUsers from "./pages/ManageUsers.jsx";
 import NameAddressLostId from "./pages/NameAddressLostId.jsx";
 import NIDMake from "./pages/NIDMake.jsx";
@@ -107,6 +108,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateAdminRoute>
             <PriceList />
+          </PrivateAdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/manage-order-button",
+        element: (
+          <PrivateAdminRoute>
+            <ManageOrderButton />
           </PrivateAdminRoute>
         ),
       },

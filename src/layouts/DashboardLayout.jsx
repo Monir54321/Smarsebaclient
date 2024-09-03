@@ -95,6 +95,19 @@ const DashboardLayout = () => {
                 </Link>
               </li>
             )}
+
+            {userData?.role === "master" && (
+              <li className="mt-2 text-[15px] font-sans text-gray-500">
+                <Link
+                  to={"/dashboard/manage-order-button"}
+                  onClick={handleLinkClick}
+                >
+                  <FaMoneyCheckAlt width={16} height={16} />
+                  Manage Order Button
+                </Link>
+              </li>
+            )}
+
             <li className="mt-2 text-[15px] font-sans text-gray-500">
               <Link to={"/dashboard/nidMake"} onClick={handleLinkClick}>
                 <FaAddressCard width={16} height={16} />
@@ -138,6 +151,12 @@ const DashboardLayout = () => {
               <Link to={"/dashboard/servercopy"} onClick={handleLinkClick}>
                 <FaRegAddressCard width={16} height={16} />
                 সার্ভার কপি
+              </Link>
+            </li>
+            <li className="mt-2 text-[15px] font-sans text-gray-500">
+              <Link to={"/dashboard/servercopy"} onClick={handleLinkClick}>
+                <FaRegAddressCard width={16} height={16} />
+                সার্ভার কপি channel 2
               </Link>
             </li>
             <li className="mt-2 text-[15px] font-sans text-gray-500">
