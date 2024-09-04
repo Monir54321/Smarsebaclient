@@ -50,7 +50,7 @@ const SignUp = () => {
     }
 
     if (email && password && name) {
-      fetch("http://localhost:5000/users/", {
+      fetch("https://smarsebaserver.onrender.com/users/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

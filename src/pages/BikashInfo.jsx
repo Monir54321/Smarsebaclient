@@ -17,7 +17,7 @@ const BikashInfo = () => {
   const [price, setPrice] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+    fetch("https://smarsebaserver.onrender.com/priceList/668f76383906559fe7ff631c")
       .then((response) => response.json())
       .then((pData) => {
         setPrice(parseFloat(pData?.data?.bikashInfo));
@@ -27,7 +27,7 @@ const BikashInfo = () => {
  
 
   useEffect(() => {
-    fetch(`http://localhost:5000/bikashInfoOrders/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/bikashInfoOrders/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "Success") {
@@ -61,7 +61,7 @@ const BikashInfo = () => {
       const token = await user.getIdToken(); 
       if (price) {
         const userData = await fetch(
-          `http://localhost:5000/users/${user.email}`,
+          `https://smarsebaserver.onrender.com/users/${user.email}`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // Include the token in headers
@@ -70,7 +70,7 @@ const BikashInfo = () => {
         ).then((res) => res.json());
 
         if (userData?.data?.amount >= price) {
-          const rData = await fetch("http://localhost:5000/bikashInfoOrders/", {
+          const rData = await fetch("https://smarsebaserver.onrender.com/bikashInfoOrders/", {
             method: "POST",
             headers: {
               Accept: "application/json",

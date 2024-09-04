@@ -9,7 +9,7 @@ const useUserData = (email) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/users/${email}`);
+        const response = await axios.get(`https://smarsebaserver.onrender.com/users/${email}`);
         setData(response.data.data); // Adjust this according to your data structure
       } catch (err) {
         setError(err.message);

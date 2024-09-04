@@ -18,7 +18,7 @@ const ServerCopy = () => {
   const [price, setPrice] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+    fetch("https://smarsebaserver.onrender.com/priceList/668f76383906559fe7ff631c")
       .then((response) => response.json())
       .then((pData) => {
         setPrice(parseFloat(pData?.data?.serverCopy));
@@ -36,7 +36,7 @@ const ServerCopy = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/nid?nid=${nidNumber}&dob=${dateOfBirth}`,
+        `https://smarsebaserver.onrender.com/api/nid?nid=${nidNumber}&dob=${dateOfBirth}`,
         {
           method: "GET",
           headers: {
@@ -47,7 +47,7 @@ const ServerCopy = () => {
       const data = await response.json();
       console.log("fetch data of nid", data);
       const result = await fetch(
-        `http://localhost:5000/api/nid2?nid=${nidNumber}&dob=${dateOfBirth}`,
+        `https://smarsebaserver.onrender.com/api/nid2?nid=${nidNumber}&dob=${dateOfBirth}`,
         {
           method: "GET",
           headers: {

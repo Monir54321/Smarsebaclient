@@ -22,7 +22,7 @@ const ServerCopyToNID = () => {
   const [price, setPrice] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+    fetch("https://smarsebaserver.onrender.com/priceList/668f76383906559fe7ff631c")
       .then((response) => response.json())
       .then((pData) => {
         setPrice(parseFloat(pData?.data?.autoNid));
@@ -70,17 +70,17 @@ const ServerCopyToNID = () => {
 
     setLoading(true);
 
-    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+    fetch("https://smarsebaserver.onrender.com/priceList/668f76383906559fe7ff631c")
       .then((res) => res.json())
       .then((pData) => {
         const price = pData?.data?.autoNid;
         console.log("auto nid card price: ", price);
         if (price) {
-          fetch(`http://localhost:5000/users/${user?.email}`)
+          fetch(`https://smarsebaserver.onrender.com/users/${user?.email}`)
             .then((res) => res.json())
             .then((data) => {
               if (data?.data?.amount >= price) {
-                fetch("http://localhost:5000/autoNid", {
+                fetch("https://smarsebaserver.onrender.com/autoNid", {
                   method: "POST",
                   headers: {
                     Accept: "application/json",
@@ -113,7 +113,7 @@ const ServerCopyToNID = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/nid?nid=${nidNumber}&dob=${dateOfBirth}`,
+        `https://smarsebaserver.onrender.com/api/nid?nid=${nidNumber}&dob=${dateOfBirth}`,
         {
           method: "GET",
           headers: {

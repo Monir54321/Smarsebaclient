@@ -17,7 +17,7 @@ const NameAddressLostId = () => {
     return <Loading />;
   }
   // useEffect(() => {
-  //     fetch(`http://localhost:5000/nameaddresslostid/user/${user?.email}`)
+  //     fetch(`https://smarsebaserver.onrender.com/nameaddresslostid/user/${user?.email}`)
   //     .then(res => res.json())
   //     .then(data => {
   //         setMyOrders(data?.data)
@@ -68,7 +68,7 @@ const NameAddressLostId = () => {
     console.log(data);
 
     // post data to database
-    fetch("http://localhost:5000/", {
+    fetch("https://smarsebaserver.onrender.com/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -9,7 +9,7 @@ const useManageOrderData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/manage-order-button");
+        const response = await axios.get("https://smarsebaserver.onrender.com/manage-order-button");
         setData(response.data.data); // Adjust this according to your data structure
       } catch (err) {
         setError(err.message);

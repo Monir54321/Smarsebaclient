@@ -77,7 +77,7 @@ const ServerCopyResult = ({ nidData }) => {
   }, [nationalId, dateOfBirth, nameEn]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+    fetch("https://smarsebaserver.onrender.com/priceList/668f76383906559fe7ff631c")
       .then((response) => response.json())
       .then((pData) => {
         setPrice(parseFloat(pData?.data?.serverCopy));
@@ -89,7 +89,7 @@ const ServerCopyResult = ({ nidData }) => {
       try {
         if (price && nidData) {
           const userResponse = await fetch(
-            `http://localhost:5000/users/${user?.email}`
+            `https://smarsebaserver.onrender.com/users/${user?.email}`
           );
           const userData = await userResponse.json();
 
@@ -97,7 +97,7 @@ const ServerCopyResult = ({ nidData }) => {
             return toast.error("You don't have enough money to purchase");
           } else if (userData?.data?.amount >= price) {
             const serverCopyResponse = await fetch(
-              "http://localhost:5000/serverCopys/",
+              "https://smarsebaserver.onrender.com/serverCopys/",
               {
                 method: "POST",
                 headers: {

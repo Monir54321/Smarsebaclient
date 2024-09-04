@@ -20,7 +20,7 @@ const SignCopy = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/signCopy/user/${user.email}`)
+      fetch(`https://smarsebaserver.onrender.com/signCopy/user/${user.email}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.status === "Success") {
@@ -60,17 +60,17 @@ const SignCopy = () => {
 
     console.log(info);
 
-    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+    fetch("https://smarsebaserver.onrender.com/priceList/668f76383906559fe7ff631c")
       .then((res) => res.json())
       .then((pData) => {
         const price = pData?.data?.callListOrder;
         if (price) {
-          fetch(`http://localhost:5000/users/${user.email}`)
+          fetch(`https://smarsebaserver.onrender.com/users/${user.email}`)
             .then((res) => res.json())
             .then((data) => {
               if (data?.data?.amount >= price) {
                 // Post data to database
-                fetch("http://localhost:5000/signCopy/", {
+                fetch("https://smarsebaserver.onrender.com/signCopy/", {
                   method: "POST",
                   headers: {
                     Accept: "application/json",
@@ -112,7 +112,7 @@ const SignCopy = () => {
 
   const handleDeleteOrder = (orderId) => {
     console.log("Deleting order with ID:", orderId);
-    fetch(`http://localhost:5000/signCopy/${orderId}`, {
+    fetch(`https://smarsebaserver.onrender.com/signCopy/${orderId}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

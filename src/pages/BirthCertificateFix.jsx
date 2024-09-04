@@ -19,7 +19,7 @@ const BirthCertificateFix = () => {
     return <Loading />;
   }
   useEffect(() => {
-    fetch(`http://localhost:5000/birthCertificateFixs/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/birthCertificateFixs/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status == "Success") {
@@ -51,12 +51,12 @@ const BirthCertificateFix = () => {
 
     console.log(info);
 
-    fetch(`http://localhost:5000/users/${user.email}`)
+    fetch(`https://smarsebaserver.onrender.com/users/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data?.data?.amount >= 900) {
           // post data to database
-          fetch("http://localhost:5000/birthCertificateFixs/", {
+          fetch("https://smarsebaserver.onrender.com/birthCertificateFixs/", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

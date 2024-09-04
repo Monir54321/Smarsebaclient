@@ -15,7 +15,7 @@ const NIDOrder = () => {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:5000/orderNIds/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/orderNIds/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status == "Success") {
@@ -43,13 +43,13 @@ const NIDOrder = () => {
     };
     console.log(info);
 
-    fetch(`http://localhost:5000/users/${user.email}`)
+    fetch(`https://smarsebaserver.onrender.com/users/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data?.data?.amount >= 200) {
           // post data to database
           // post data to database
-          fetch("http://localhost:5000/orderNIds/", {
+          fetch("https://smarsebaserver.onrender.com/orderNIds/", {
             method: "POST",
             headers: {
               Accept: "application/json",

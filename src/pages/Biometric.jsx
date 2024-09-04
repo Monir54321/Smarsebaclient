@@ -17,7 +17,7 @@ const Biometric = () => {
   const [selectedItem, setSelectedItem] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+    fetch("https://smarsebaserver.onrender.com/priceList/668f76383906559fe7ff631c")
       .then((res) => res.json())
       .then((data) => {
         setBioPrice(data?.data);
@@ -25,7 +25,7 @@ const Biometric = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/biometricOrders/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/biometricOrders/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status == "Success") {
@@ -49,13 +49,13 @@ const Biometric = () => {
     };
     console.log(info);
 
-    fetch(`http://localhost:5000/users/${user.email}`)
+    fetch(`https://smarsebaserver.onrender.com/users/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data?.data?.amount >= 99) {
           // post data to database
           // post data to database
-          fetch("http://localhost:5000/biometricOrders/", {
+          fetch("https://smarsebaserver.onrender.com/biometricOrders/", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

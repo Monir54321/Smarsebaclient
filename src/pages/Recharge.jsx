@@ -16,7 +16,7 @@ const Recharge = () => {
     try {
       if (amount > 0) {
         console.log("inside if", amount);
-        const res = await fetch("http://localhost:5000/api/bkash/create", {
+        const res = await fetch("https://smarsebaserver.onrender.com/api/bkash/create", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

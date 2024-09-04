@@ -17,7 +17,7 @@ const BirthCertificateOnline = () => {
     return <Loading />;
   }
   useEffect(() => {
-    fetch(`http://localhost:5000/onlineBirthCertificates/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/onlineBirthCertificates/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status == "Success") {
@@ -91,13 +91,13 @@ const BirthCertificateOnline = () => {
     };
     console.log(info);
 
-    fetch(`http://localhost:5000/users/${user.email}`)
+    fetch(`https://smarsebaserver.onrender.com/users/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data?.data?.amount >= 200) {
           // post data to database
           // post data to database
-          fetch("http://localhost:5000/onlineBirthCertificates/", {
+          fetch("https://smarsebaserver.onrender.com/onlineBirthCertificates/", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

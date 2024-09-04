@@ -19,7 +19,7 @@ const SaftyTika = () => {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:5000/saftyTikas/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/saftyTikas/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setReFetch(false);
@@ -44,19 +44,19 @@ const SaftyTika = () => {
     };
     console.log(info);
 
-    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+    fetch("https://smarsebaserver.onrender.com/priceList/668f76383906559fe7ff631c")
       .then((res) => res.json())
       .then((pData) => {
         const price = pData?.data?.saftyTika;
 
         if (price) {
-          fetch(`http://localhost:5000/users/${user?.email}`)
+          fetch(`https://smarsebaserver.onrender.com/users/${user?.email}`)
             .then((res) => res.json())
             .then((data) => {
               if (data?.data?.amount >= price) {
                 // post data to database
                 // post data to database
-                fetch("http://localhost:5000/saftyTikas/", {
+                fetch("https://smarsebaserver.onrender.com/saftyTikas/", {
                   method: "POST",
                   headers: {
                     Accept: "application/json",

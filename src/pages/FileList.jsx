@@ -24,7 +24,7 @@ const FileList = () => {
 
   useEffect(() => {
     // bikash info
-    fetch(`http://localhost:5000/bikashInfoOrders/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/bikashInfoOrders/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setBikashInfosData(data);
@@ -32,7 +32,7 @@ const FileList = () => {
       });
 
     // nogod info
-    fetch(`http://localhost:5000/nogodInfoOrders/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/nogodInfoOrders/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setNogodInfoOrders(data);
@@ -40,7 +40,7 @@ const FileList = () => {
       });
 
     // order NIds
-    fetch(`http://localhost:5000/orderNIds/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/orderNIds/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setOrderNIds(data);
@@ -48,7 +48,7 @@ const FileList = () => {
       });
 
     // bikashPinReset
-    fetch(`http://localhost:5000/bikashPinResets/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/bikashPinResets/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setBikashPinResets(data);
@@ -56,7 +56,7 @@ const FileList = () => {
       });
 
     // callListOrders
-    fetch(`http://localhost:5000/callListOrders/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/callListOrders/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setCallListOrders(data);
@@ -64,7 +64,7 @@ const FileList = () => {
       });
 
     // birthCertificateFixs
-    fetch(`http://localhost:5000/birthCertificateFixs/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/birthCertificateFixs/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setBirthCertificateFixs(data);
@@ -72,7 +72,7 @@ const FileList = () => {
       });
 
     // biometricOrders
-    fetch(`http://localhost:5000/biometricOrders/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/biometricOrders/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setBiometricOrders(data);
@@ -80,7 +80,7 @@ const FileList = () => {
       });
 
     // onlineBirthCertificates
-    fetch(`http://localhost:5000/onlineBirthCertificates/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/onlineBirthCertificates/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setOnlineBirthCertificates(data);
@@ -88,7 +88,7 @@ const FileList = () => {
       });
 
     // saftyTikas
-    fetch(`http://localhost:5000/saftyTikas/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/saftyTikas/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setSaftyTikas(data);
@@ -96,7 +96,7 @@ const FileList = () => {
       });
 
     // serverCopys
-    fetch(`http://localhost:5000/serverCopys/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/serverCopys/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setServerCopys(data);
@@ -104,7 +104,7 @@ const FileList = () => {
       });
 
     // nidMakes
-    fetch(`http://localhost:5000/nidMakes/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/nidMakes/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setNidMakes(data);

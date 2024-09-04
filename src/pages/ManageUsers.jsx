@@ -10,7 +10,7 @@ const ManageUsers = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users/`)
+    fetch(`https://smarsebaserver.onrender.com/users/`)
       .then((res) => res.json())
       .then((data) => {
         setReFetch(false);
@@ -36,7 +36,7 @@ const ManageUsers = () => {
 
   const handleAddMoney = async (email) => {
     const userAmount = amount[email];
-    fetch(`http://localhost:5000/users/bikash`, {
+    fetch(`https://smarsebaserver.onrender.com/users/bikash`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +61,7 @@ const ManageUsers = () => {
     const agreed = confirm("Are you sure to delete this account?");
 
     if (agreed) {
-      fetch(`http://localhost:5000/users/${email}`, {
+      fetch(`https://smarsebaserver.onrender.com/users/${email}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

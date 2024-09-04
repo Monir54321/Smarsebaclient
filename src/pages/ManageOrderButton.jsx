@@ -24,7 +24,7 @@ const ManageOrderButton = () => {
     if (selectedId && selectedStatus) {
       try {
         const updateResponse = await axios.patch(
-          `http://localhost:5000/manage-order-button/${selectedId}`,
+          `https://smarsebaserver.onrender.com/manage-order-button/${selectedId}`,
           { status: selectedStatus }
         );
         if (updateResponse?.data?.data?.modifiedCount === 1) {

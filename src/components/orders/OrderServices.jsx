@@ -18,7 +18,7 @@ const OrderServices = ({ prop }) => {
     setSuccessOrders(null);
 
     if (prop) {
-      fetch(`http://localhost:5000/${prop}`)
+      fetch(`https://smarsebaserver.onrender.com/${prop}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -50,7 +50,7 @@ const OrderServices = ({ prop }) => {
     // confirm admin is sure to accept the order
 
     if (agreed) {
-      fetch(`http://localhost:5000/${prop}/${id}`, {
+      fetch(`https://smarsebaserver.onrender.com/${prop}/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -105,7 +105,7 @@ const OrderServices = ({ prop }) => {
             const cancellationReason = inputResult.value;
             console.log("Cancellation reason:", cancellationReason);
 
-            fetch(`http://localhost:5000/${prop}/${id}`, {
+            fetch(`https://smarsebaserver.onrender.com/${prop}/${id}`, {
               method: "PATCH",
               headers: {
                 "Content-Type": "application/json",
@@ -147,7 +147,7 @@ const OrderServices = ({ prop }) => {
     const agreed = confirm("Do you want to delete this order?");
 
     if (agreed) {
-      fetch(`http://localhost:5000/${prop}/${id}`, {
+      fetch(`https://smarsebaserver.onrender.com/${prop}/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -174,7 +174,7 @@ const OrderServices = ({ prop }) => {
     console.log({ message }, { title }, { id });
 
     if (title == "বায়োমেট্রিক") {
-      fetch(`http://localhost:5000/biometricOrders/${id}`, {
+      fetch(`https://smarsebaserver.onrender.com/biometricOrders/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -191,7 +191,7 @@ const OrderServices = ({ prop }) => {
           }
         });
     } else if (title == "বিকাশ ইনফো") {
-      fetch(`http://localhost:5000/bikashInfoOrders/${id}`, {
+      fetch(`https://smarsebaserver.onrender.com/bikashInfoOrders/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -207,7 +207,7 @@ const OrderServices = ({ prop }) => {
           }
         });
     } else if (title == "নগদ ইনফো") {
-      fetch(`http://localhost:5000/nogodInfoOrders/${id}`, {
+      fetch(`https://smarsebaserver.onrender.com/nogodInfoOrders/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -237,7 +237,7 @@ const OrderServices = ({ prop }) => {
 
     console.log(title);
     if (title == "কল লিস্ট" && files) {
-      fetch(`http://localhost:5000/callListOrders/${id}`, {
+      fetch(`https://smarsebaserver.onrender.com/callListOrders/${id}`, {
         method: "PATCH",
 
         body: JSON.stringify({ pdf: formData, status: "Success" }),

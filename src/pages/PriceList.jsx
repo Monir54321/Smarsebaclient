@@ -10,7 +10,7 @@ const PriceList = () => {
   console.log("price list data: ", priceListData);
 
   useEffect(() => {
-    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+    fetch("https://smarsebaserver.onrender.com/priceList/668f76383906559fe7ff631c")
       .then((response) => response.json())
       .then((data) => {
         setPriceListData(data?.data);
@@ -34,7 +34,7 @@ const PriceList = () => {
     setLoading(true);
 
     try {
-      fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c", {
+      fetch("https://smarsebaserver.onrender.com/priceList/668f76383906559fe7ff631c", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

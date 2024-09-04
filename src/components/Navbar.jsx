@@ -12,7 +12,7 @@ const Navbar = () => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/users/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setUserData(data?.data);

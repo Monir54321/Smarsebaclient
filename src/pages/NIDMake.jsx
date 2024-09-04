@@ -40,7 +40,7 @@ const NIDMake = () => {
   const [price, setPrice] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:5000/priceList/668f76383906559fe7ff631c")
+    fetch("https://smarsebaserver.onrender.com/priceList/668f76383906559fe7ff631c")
       .then((response) => response.json())
       .then((pData) => {
         setPrice(parseFloat(pData?.data?.nidMake));
@@ -66,7 +66,7 @@ const NIDMake = () => {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:5000/nidMakes/user/${user?.email}`)
+    fetch(`https://smarsebaserver.onrender.com/nidMakes/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setMyOrders(data?.data);
@@ -103,7 +103,7 @@ const NIDMake = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/upload-pdf",
+        "https://smarsebaserver.onrender.com/upload-pdf",
         formData,
         {
           headers: {
@@ -169,12 +169,12 @@ const NIDMake = () => {
 
     // Fetch user data to check amount
     try {
-      fetch(`http://localhost:5000/users/${user.email}`)
+      fetch(`https://smarsebaserver.onrender.com/users/${user.email}`)
         .then((res) => res.json())
         .then((data) => {
           if (data?.data?.amount >= 5) {
             // If amount is sufficient, submit the form data
-            fetch("http://localhost:5000/nidMakes/", {
+            fetch("https://smarsebaserver.onrender.com/nidMakes/", {
               method: "POST",
               headers: {
                 Accept: "application/json",

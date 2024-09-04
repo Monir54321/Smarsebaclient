@@ -4,7 +4,7 @@ const ViewOrder = ({ viewUrl }) => {
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/${viewUrl}`)
+    fetch(`https://smarsebaserver.onrender.com/${viewUrl}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data?.data);
