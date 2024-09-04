@@ -10,7 +10,6 @@ import "./NationalIDCard.css";
 // import {generateBarcode as PDF417} from "pdf417";
 
 const NationalIDCard = ({ info }) => {
-  console.log("props infor", info);
   const {
     nameBangla,
     nameEnglish,
@@ -27,11 +26,18 @@ const NationalIDCard = ({ info }) => {
     pinNumber,
   } = info;
 
-  console.log("bar", pinNumber, birthLocation, nameEnglish);
-
   useEffect(() => {
-    window.print();
-  }, []);
+    if (info) {
+      const originalTitle = document.title;
+      document.title = `nid-${idNumber}`;
+
+      // Use requestAnimationFrame to ensure the title is updated before printing
+      setTimeout(() => {
+        window.print();
+        document.title = originalTitle;
+      }, 500);
+    }
+  }, [info]);
 
   return (
     // <body oncontextmenu="return false;">

@@ -13,6 +13,7 @@
     "axios": "^1.7.2",
     "daisyui": "^4.12.10",
     "firebase": "^10.12.2",
+    "html2pdf.js": "^0.10.2",
     "jquery": "^3.7.1",
     "pdf417": "^0.1.5",
     "pdf417-generator": "^1.0.5",
