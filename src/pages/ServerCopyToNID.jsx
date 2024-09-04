@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import toast from "react-hot-toast";
 import SyncLoader from "react-spinners/SyncLoader";
 import auth from "../firebase/firebase.config";
 import getBanglaDate from "../utils/bangladate";
@@ -99,11 +98,11 @@ const ServerCopyToNID = () => {
                     console.log("sData", sData);
                     if (sData.status == "Success") {
                       // setReFetch(true);
-                      toast.success(sData.message);
+                      // toast.success(sData.message);
                       e.target.reset();
                       console.log(sData);
                     } else {
-                      toast.error(sData.message);
+                      // toast.error(sData.message);
                       console.log(sData);
                     }
                   });
