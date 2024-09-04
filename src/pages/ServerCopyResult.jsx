@@ -113,11 +113,11 @@ const ServerCopyResult = ({ nidData }) => {
 
             const serverCopyData = await serverCopyResponse.json();
 
-            if (serverCopyData.status === "Success") {
-              toast.success(serverCopyData.message);
-            } else {
-              toast.error(serverCopyData.message);
-            }
+            // if (serverCopyData.status === "Success") {
+            //   toast.success(serverCopyData.message);
+            // } else {
+            //   toast.error(serverCopyData.message);
+            // }
           }
         }
       } catch (error) {
@@ -130,10 +130,17 @@ const ServerCopyResult = ({ nidData }) => {
   }, [price, nidData, user?.email]); // Add relevant dependencies
 
   useEffect(() => {
-    if (nidData && qrImage) {
-      window.print();
+    if (nidData && qrImage && nationalId) {
+      const originalTitle = document.title;
+      document.title = `Server Copy - ${nationalId}`;
+
+      // Use requestAnimationFrame to ensure the title is updated before printing
+      requestAnimationFrame(() => {
+        window.print();
+        document.title = originalTitle;
+      });
     }
-  }, [nidData, qrImage]);
+  }, [nidData, qrImage, nationalId]);
 
   return (
     <div className="print:-mt-20 print:scale-100">
@@ -575,29 +582,59 @@ const ServerCopyResult = ({ nidData }) => {
         >
           {religion}
         </div>
-        <div
-          style={{
-            position: "absolute",
-            left: "37%",
-            top: "70.9%",
-            fontSize: "18px",
-            color: "rgb(7, 7, 7)",
-          }}
-        >
-          ভোটার এরিয়া কোড
-        </div>
-        <div
-          id="blood_grp"
-          style={{
-            position: "absolute",
-            left: "55%",
-            top: "70.9%",
-            fontSize: "18px",
-            color: "rgb(7, 7, 7)",
-          }}
-        >
-          {voterAreaCode}
-        </div>
+        {bloodGroup ? (
+          <>
+            <div
+              style={{
+                position: "absolute",
+                left: "37%",
+                top: "70.9%",
+                fontSize: "18px",
+                color: "rgb(7, 7, 7)",
+              }}
+            >
+              রক্তের গ্রুপ
+            </div>
+            <div
+              id="blood_grp"
+              style={{
+                position: "absolute",
+                left: "55%",
+                top: "70.9%",
+                fontSize: "18px",
+                color: "red",
+              }}
+            >
+              {bloodGroup}
+            </div>
+          </>
+        ) : (
+          <>
+            <div
+              style={{
+                position: "absolute",
+                left: "37%",
+                top: "70.9%",
+                fontSize: "18px",
+                color: "rgb(7, 7, 7)",
+              }}
+            >
+              ভোটার এরিয়া কোড
+            </div>
+            <div
+              id="blood_grp"
+              style={{
+                position: "absolute",
+                left: "55%",
+                top: "70.9%",
+                fontSize: "18px",
+                color: "rgb(7, 7, 7)",
+              }}
+            >
+              {voterAreaCode}
+            </div>
+          </>
+        )}
         <div
           style={{
             position: "absolute",

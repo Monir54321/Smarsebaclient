@@ -1,6 +1,5 @@
 const validateInfo = (info) => {
-  return (
-    info.nameBangla &&
+  return info.nameBangla &&
     info.nameEnglish &&
     info.idNumber &&
     info.pinNumber &&
@@ -8,9 +7,9 @@ const validateInfo = (info) => {
     info.motherName &&
     info.birthLocation &&
     info.location &&
-    info.nidImg &&
-    info.signatureImg
-  ) ? true : false;
+    info.nidImg
+    ? true
+    : false;
 };
 
 export default validateInfo;
